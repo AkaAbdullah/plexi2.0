@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema(
     },
     roles: {
       type: [String], // or type: String
-      default: ["user"], // default role assigned when not specified
+      default: "normalUser", // default role assigned when not specified
     },
   },
   {

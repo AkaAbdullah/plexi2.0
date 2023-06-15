@@ -4,11 +4,16 @@ const {
   registerUser,
   getUsers,
   loginUser,
+  getMe,
 } = require("../controllers/userControllers");
+
+const { protect } = require("../middlewares/authMiddleware");
 
 router.get("/", getUsers);
 
 router.post("/", registerUser);
+
+router.get("/:id", protect, getMe);
 
 router.post("/login", loginUser);
 
