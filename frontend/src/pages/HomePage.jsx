@@ -33,16 +33,12 @@ export const HomePage = () => {
       const response = await axios.get("http://localhost:5000/api/orders");
       setResOrders(response.data);
       setLoading(false);
+      console.log(resOrders);
     } catch (error) {
       console.log(error);
       setLoading(false);
     }
   };
-
-  const [name, setName] = useState("");
-  useEffect(() => {
-    setName(resOrders.orderCreatedBy);
-  }, [resOrders]);
 
   useEffect(() => {
     getdata();
@@ -112,17 +108,16 @@ export const HomePage = () => {
           ></input>
           <button type="submit">Save ORders</button>
         </form>
-
         {loading ? (
           <div>Loading...</div>
         ) : (
           resOrders.map((order) => (
             <li key={order._id}>
-              Order No: {order.orderNo}, created by : {order.orderCreatedBy}
+              Order No: {order.orderNo}, created by :
+              {order.orderCreatedBy.userName}
             </li>
           ))
         )}
-        <p>name : {name}</p>
       </div>
     </>
   );

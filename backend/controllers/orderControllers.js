@@ -4,21 +4,15 @@ const ORDER_DETAILS = require("../modals/orderDetails");
 
 //Get All orders Route
 const getOrders = asyncHandler(async (req, res) => {
-  const orders = await ORDERS.find();
+  const orders = await ORDERS.find()
+    .populate("orderCreatedBy", "userName email") // Populate the "orderCreatedBy" field with the "userName" and "email" fields from the "USERS" collection
+    .exec();
   res.status(200).json(orders);
 });
 
 // create Order
 const createOrder = asyncHandler(async (req, res) => {
-  const {
-    orderNo,
-    marketPleacOrderId,
-    thickness,
-    length,
-    width,
-    diameter,
-    quantity,
-  } = req.body;
+  const { orderNo, marketPleacOrderId, thickness } = req.body;
 
   if (!orderNo || !marketPleacOrderId || !thickness) {
     res.status(400);
