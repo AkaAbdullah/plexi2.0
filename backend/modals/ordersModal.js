@@ -11,6 +11,26 @@ const ordersSchema = mongoose.Schema(
       type: Number,
       required: [true, "Please add a order number"],
     },
+    marketPleacOrderId: {
+      type: String,
+      required: [true, "Please add a market place Order ID"],
+    },
+    thickness: {
+      type: String,
+      required: [true, "Please add thickness"],
+    },
+    length: {
+      type: String,
+    },
+    width: {
+      type: String,
+    },
+    diameter: {
+      type: String,
+    },
+    quantity: {
+      type: Number,
+    },
   },
   {
     timeStamps: true,

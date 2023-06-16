@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const ORDERS = require("../modals/ordersModal");
+const ORDER_DETAILS = require("../modals/orderDetails");
 
 //Get All orders Route
 const getOrders = asyncHandler(async (req, res) => {
@@ -19,6 +20,21 @@ const createOrder = asyncHandler(async (req, res) => {
       orderCreatedBy: req.user.id,
     });
     res.status(200).json(order);
+  }
+});
+
+//CREATE ORDER DETAILS ROUTE
+
+const addOrderDetails = asyncHandler(async (req, res) => {
+  const order = await ORDERS.fineOne(req.params.id);
+  if (order) {
+    res.status(200).json({
+      orderNo: order.orderNo,
+      createdby: order.orderCreatedBy,
+    });
+  } else {
+    res.status(400);
+    throw new Error("no order found");
   }
 });
 
@@ -50,4 +66,5 @@ module.exports = {
   createOrder,
   updateOrder,
   deleteOrder,
+  addOrderDetails,
 };

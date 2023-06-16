@@ -9,7 +9,7 @@ const {
 
 const { protect } = require("../middlewares/authMiddleware");
 
-router.get("/", getUsers);
+router.get("/editusers", protect, getUsers);
 
 router.post("/", registerUser);
 

@@ -3,10 +3,23 @@ const USERS = require("../modals/userModal");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-//Getting All Users to admin page
-const getUsers = (req, res) => {
-  res.json({ message: "All users here" });
-};
+//Editing  All Users to Super User page
+const getUsers = asyncHandler(async (req, res) => {
+  //Check if a user is present to make a api call
+  const user_id = req.user.id;
+  if (user_id) {
+    const superUser = await USERS.findById(user_id);
+    if (superUser.roles === "superUser") {
+      res.status(200).json({ message: "You are a super user" });
+    } else {
+      res.status(400);
+      throw new Error("Not a SuperUser");
+    }
+  } else {
+    res.status(400);
+    throw new Error("no Access ");
+  }
+});
 
 //Getting a Single user detail by the user Itself
 const getMe = asyncHandler(async (req, res) => {
