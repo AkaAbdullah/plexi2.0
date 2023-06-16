@@ -10,6 +10,7 @@ const ordersSchema = mongoose.Schema(
     orderNo: {
       type: Number,
       required: [true, "Please add a order number"],
+      unique: true,
     },
     marketPleacOrderId: {
       type: String,

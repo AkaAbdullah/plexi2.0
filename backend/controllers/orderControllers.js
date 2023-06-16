@@ -10,14 +10,29 @@ const getOrders = asyncHandler(async (req, res) => {
 
 // create Order
 const createOrder = asyncHandler(async (req, res) => {
-  const userInput = req.body.orderNo;
-  if (userInput.length === 0) {
+  const {
+    orderNo,
+    marketPleacOrderId,
+    thickness,
+    length,
+    width,
+    diameter,
+    quantity,
+  } = req.body;
+
+  if (!orderNo || !marketPleacOrderId || !thickness) {
     res.status(400);
-    throw new Error("Please enter some value");
+    throw new Error("Please enter All fields");
   } else {
     const order = await ORDERS.create({
       orderNo: req.body.orderNo,
       orderCreatedBy: req.user.id,
+      marketPleacOrderId: req.body.marketPleacOrderId,
+      thickness: req.body.thickness,
+      length: req.body.length,
+      width: req.body.width,
+      diameter: req.body.diameter,
+      quantity: req.body.quantity,
     });
     res.status(200).json(order);
   }
