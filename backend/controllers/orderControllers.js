@@ -5,31 +5,34 @@ const ORDER_DETAILS = require("../modals/orderDetails");
 //Get All orders Route
 const getOrders = asyncHandler(async (req, res) => {
   const orders = await ORDERS.find()
-    .populate("orderCreatedBy", "userName email") // Populate the "orderCreatedBy" field with the "userName" and "email" fields from the "USERS" collection
+    .populate("orderCreatedBy", "userName") // Populate the "orderCreatedBy" field with the "userName" and "email" fields from the "USERS" collection
     .exec();
   res.status(200).json(orders);
 });
 
 // create Order
 const createOrder = asyncHandler(async (req, res) => {
-  const { orderNo, marketPleacOrderId, thickness } = req.body;
-
-  if (!orderNo || !marketPleacOrderId || !thickness) {
+  const { orderNo } = req.body;
+  //cheking if the field is empty
+  if (orderNo.length === 0) {
     res.status(400);
-    throw new Error("Please enter All fields");
-  } else {
-    const order = await ORDERS.create({
-      orderNo: req.body.orderNo,
-      orderCreatedBy: req.user.id,
-      marketPleacOrderId: req.body.marketPleacOrderId,
-      thickness: req.body.thickness,
-      length: req.body.length,
-      width: req.body.width,
-      diameter: req.body.diameter,
-      quantity: req.body.quantity,
-    });
-    res.status(200).json(order);
+    throw new Error("Please Enter a Order Number");
   }
+
+  // Checking if order already exists
+  const orderExists = await ORDERS.findOne({ orderNo });
+  if (orderExists) {
+    res.status(400);
+    throw new Error("Order already exists");
+  }
+
+  // Create the order
+  const order = await ORDERS.create({
+    orderNo,
+    orderCreatedBy: req.user.id,
+  });
+
+  res.status(201).json(order);
 });
 
 //CREATE ORDER DETAILS ROUTE

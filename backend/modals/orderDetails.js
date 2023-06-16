@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const multiLineOrderDetails = mongoose.Schema(
   {
-    order: {
+    orderNumber: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ORDERS",
       required: true,

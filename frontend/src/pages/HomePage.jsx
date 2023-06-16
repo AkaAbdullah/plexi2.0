@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export const HomePage = () => {
+  useEffect(() => {
+    getdata();
+  }, []);
+
   const [formData, setFormData] = useState({
     orderNo: "",
     marketPlaceOrderId: "",
@@ -22,12 +26,12 @@ export const HomePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    postApiCall();
   };
 
   //API call to get ORDERS
   const [resOrders, setResOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState("");
   const getdata = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/orders");
@@ -35,20 +39,9 @@ export const HomePage = () => {
       setLoading(false);
       console.log(resOrders);
     } catch (error) {
-      console.log(error);
+      setErr(error);
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    getdata();
-  }, []);
-  //API calls for post method
-
-  const postApiCall = async () => {
-    const res = await axios.post("http://localhost:5000/api/orders", {
-      formData,
-    });
   };
 
   return (
@@ -118,6 +111,7 @@ export const HomePage = () => {
             </li>
           ))
         )}
+        <div>{err.message}</div>
       </div>
     </>
   );

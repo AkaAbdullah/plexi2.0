@@ -11,7 +11,7 @@ const { protect } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.get("/", getOrders); //please add protect
+router.get("/", protect, getOrders); //please add protect
 
 router.post("/", protect, createOrder); //please add protect
 
