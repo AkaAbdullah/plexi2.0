@@ -12,6 +12,9 @@ const ordersSchema = mongoose.Schema(
       required: [true, "Please add a order number"],
       unique: true,
     },
+    orderDetails: {
+      type: Array,
+    },
   },
   {
     timeStamps: true,

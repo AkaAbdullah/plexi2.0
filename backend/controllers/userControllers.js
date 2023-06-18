@@ -68,7 +68,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
   const { userName, password } = req.body;
-
+  console.log(req.body.userName);
   //Check for userName in database
   const user = await USERS.findOne({ userName });
 

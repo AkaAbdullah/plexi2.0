@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const ORDERS = require("../modals/ordersModal");
-const ORDER_DETAILS = require("../modals/orderDetails");
 
 //Get All orders Route
 const getOrders = asyncHandler(async (req, res) => {
@@ -12,7 +11,7 @@ const getOrders = asyncHandler(async (req, res) => {
 
 // create Order
 const createOrder = asyncHandler(async (req, res) => {
-  const { orderNo } = req.body;
+  const { orderNo, orderDetails } = req.body;
   //cheking if the field is empty
   if (orderNo.length === 0) {
     res.status(400);
@@ -29,6 +28,7 @@ const createOrder = asyncHandler(async (req, res) => {
   // Create the order
   const order = await ORDERS.create({
     orderNo,
+    details,
     orderCreatedBy: req.user.id,
   });
 
