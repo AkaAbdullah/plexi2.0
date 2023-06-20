@@ -8,7 +8,7 @@ const ordersSchema = mongoose.Schema(
       ref: "USERS",
     },
     orderNo: {
-      type: Number,
+      type: String,
       required: [true, "Please add a order number"],
       unique: true,
     },
@@ -17,7 +17,7 @@ const ordersSchema = mongoose.Schema(
     },
   },
   {
-    timeStamps: true,
+    timestamps: true,
   }
 );
 

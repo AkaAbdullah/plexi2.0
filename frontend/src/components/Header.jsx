@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuthStore from "../Zustand/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  const logout = useAuthStore((state) => state.logout);
+  const { isAuthenticated, user, logout } = useAuthStore();
 
   const [nav, setNav] = useState(false);
   const navigate = useNavigate();
@@ -18,6 +17,8 @@ export const Header = () => {
     navigate("/login");
   };
 
+  useEffect(() => {}, [user, isAuthenticated]);
+
   return (
     <>
       <header className=" top-0 z-10 drop-shadow-xl   dark:bg-darkSecondary bg-lightSecondary text-white sticky">
@@ -28,12 +29,23 @@ export const Header = () => {
           <div className="hidden md:flex gap-5 text-xl  font-bold  px-6">
             <Link to="/">View Todays Orders</Link>
             <Link to="/">Add new Orders</Link>
-            {isLoggedIn ? (
-              <Link onClick={handleLogout} to="/login">
+            {isAuthenticated ? (
+              <button
+                className="bg-orange-600  hover:bg-teal-500 w-24 text-center   rounded-md"
+                onClick={handleLogout}
+                to="/login"
+              >
                 Logout
-              </Link>
+              </button>
             ) : (
               <Link to="/login">Login</Link>
+            )}
+            {isAuthenticated ? (
+              <p className="text-orange-400 text-base underline">
+                Logged in as : {user}
+              </p>
+            ) : (
+              ""
             )}
           </div>
           <div onClick={handleNav} className="md:hidden text-4xl">

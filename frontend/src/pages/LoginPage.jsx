@@ -7,19 +7,19 @@ export const LoginPage = () => {
   //Login User Logic
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const login = useAuthStore((state) => state.login);
-  const isLoading = useAuthStore((state) => state.isLoading);
-  const error = useAuthStore((state) => state.error);
   const navigate = useNavigate();
 
+  const { isLoading, isError, isAuthenticated, login } = useAuthStore();
+
   useEffect(() => {
-    if (error) {
-      console.log(error);
-    } else {
-      toast.success("Logged In");
-      console.log("lun");
+    if (isError) {
+      toast.error("Invalid Credentials ");
     }
-  }, [error, navigate]);
+    if (isAuthenticated) {
+      toast.success("logged in Sucessfully");
+      navigate("/");
+    }
+  }, [isAuthenticated, isError]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +56,9 @@ export const LoginPage = () => {
               Login
             </button>
             {isLoading && <p className="text-center mb-5">Loading...</p>}
-            {error && <p className="text-center mb-5">{error}</p>}
+            {isError && (
+              <p className="text-center mb-5">Error while Logging in</p>
+            )}
           </form>
         </div>
       </section>

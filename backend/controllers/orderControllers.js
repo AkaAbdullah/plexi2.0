@@ -38,7 +38,7 @@ const createOrder = asyncHandler(async (req, res) => {
 //CREATE ORDER DETAILS ROUTE
 
 const addOrderDetails = asyncHandler(async (req, res) => {
-  const order = await ORDERS.fineOne(req.params.id);
+  const order = await ORDERS.findOne(req.params.id);
   if (order) {
     res.status(200).json({
       orderNo: order.orderNo,
@@ -73,10 +73,51 @@ const deleteOrder = asyncHandler(async (req, res) => {
   }
 });
 
+//CREATE multi line order
+const createMultipleOrders = async (req, res) => {
+  try {
+    const orderNumbers = req.body.orderNumbers;
+    console.log(typeof req.body.orderNumbers);
+
+    if (!orderNumbers || typeof orderNumbers !== "string") {
+      return res.status(400).json({ error: "Invalid order numbers" });
+    }
+
+    const orderNumberArray = orderNumbers
+      .split("\n")
+      .filter((orderNo) => orderNo.trim() !== "");
+
+    const ordersToCreate = orderNumberArray.map((orderNo) => ({
+      orderNo,
+      orderCreatedBy: req.user.id,
+    }));
+
+    const createdOrders = await ORDERS.insertMany(ordersToCreate);
+    res.status(201).json(createdOrders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+//API for counting doucments
+
+const countDocuments = asyncHandler(async (req, res) => {
+  try {
+    const count = await ORDERS.countDocuments({});
+    res.json({ count });
+  } catch (error) {
+    console.error("Failed to get the count of documents:", error);
+    res.status(500).json({ error: "Failed to get the count of documents" });
+  }
+});
+
 module.exports = {
   getOrders,
   createOrder,
   updateOrder,
   deleteOrder,
   addOrderDetails,
+  createMultipleOrders,
+  countDocuments,
 };

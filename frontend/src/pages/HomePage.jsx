@@ -1,5 +1,15 @@
 import { Link } from "react-router-dom";
+import countOrders from "../Zustand/useOrderCount";
+import { useEffect } from "react";
+import { Spinner } from "../components/Spinner";
+
 export const HomePage = () => {
+  const { isLoading, isError, totalCount, count } = countOrders();
+
+  useEffect(() => {
+    count();
+  }, [count]);
+
   return (
     <>
       <section className=" mx-auto py-6 z-10 p-4 text-white container  h-screen max-w-6xl flex items-center justify-between flex-wrap sm:flex  sm:items-center ">
@@ -13,12 +23,16 @@ export const HomePage = () => {
             <p className="text-3xl">View Todays Orders</p>
           </div>
         </Link>
-        <Link to="/">
+        <Link to="/allorders">
           <div className="dark:bg-darkSecondary hover:bg-slate-700 rounded-[12px] h-64 drop-shadow-xl flex flex-col justify-center items-center  bg-lightSecondary w-72">
-            <p className="text-3xl">View All Orders + Total Order Count</p>
+            <p className="text-3xl mb-5">Total Orders Count</p>
+            <p className="text-4xl">
+              {isLoading ? <Spinner /> : totalCount.count}
+            </p>
+            <p className="text-2xl mt-5">View All</p>
           </div>
         </Link>
-        <Link to="/">
+        <Link to="/addnew">
           <div className="dark:bg-darkSecondary  hover:bg-slate-700 rounded-[12px] h-64 drop-shadow-xl flex flex-col justify-center items-center  bg-lightSecondary w-72">
             <p className="text-3xl">Generate Orders</p>
           </div>
