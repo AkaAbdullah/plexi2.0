@@ -1,9 +1,21 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import useAuthStore from "../Zustand/useAuthStore";
+import { useNavigate } from "react-router-dom";
+
 export const Header = () => {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const logout = useAuthStore((state) => state.logout);
+
   const [nav, setNav] = useState(false);
+  const navigate = useNavigate();
   const handleNav = () => {
     setNav(!nav);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
   return (
@@ -16,8 +28,13 @@ export const Header = () => {
           <div className="hidden md:flex gap-5 text-xl  font-bold  px-6">
             <Link to="/">View Todays Orders</Link>
             <Link to="/">Add new Orders</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/">Logout</Link>
+            {isLoggedIn ? (
+              <Link onClick={handleLogout} to="/login">
+                Logout
+              </Link>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
           </div>
           <div onClick={handleNav} className="md:hidden text-4xl">
             {!nav ? <span>☰</span> : <span>&#120;</span>}
