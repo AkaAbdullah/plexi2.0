@@ -3,7 +3,7 @@ import { AllOrdersTable } from "../components/AllOrdersTable";
 export const ViewAllOrders = () => {
   return (
     <>
-      <section className="container mx-auto max-w-6xl p-4 z-10 text-white h-screen ">
+      <section className="container mx-auto  max-w-full  z-10 text-white h-full ">
         <p className="text-center text-2xl font-bold">All orders Detals</p>
         <div className="bg-darkSecondary drop-shadow-xl flex items-center h-16 p-4 ">
           <input
@@ -13,7 +13,7 @@ export const ViewAllOrders = () => {
             autoFocus
           ></input>
         </div>
-        <div>
+        <div className="m-10">
           <AllOrdersTable />
         </div>
       </section>

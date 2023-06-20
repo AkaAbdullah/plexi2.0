@@ -1,22 +1,51 @@
-import React from "react";
 import DataTable from "react-data-table-component";
+import fetchOrdersFunc from "../Zustand/AllOrdersApiCall";
+import { useEffect } from "react";
 
 export const AllOrdersTable = () => {
+  const { isLoading, isError, message, isSuccess } = fetchOrdersFunc();
+
+  useEffect(() => {}, []);
+
   const columns = [
     {
-      name: "Title",
+      name: "orderNo",
       selector: (row) => row.name,
       sortable: true,
+      style: {
+        maxWidth: "150px", // Adjust the maximum width of the column
+      },
     },
     {
-      name: "Email",
+      name: "Thickness",
       selector: (row) => row.email,
-      sortable: true,
+      style: {
+        maxWidth: "150px", // Adjust the maximum width of the column
+      },
     },
     {
-      name: "age",
+      name: "Length and Fraction Value",
       selector: (row) => row.age,
-      sortable: true,
+    },
+    {
+      name: "Width and Fraction Value",
+      selector: (row) => row.age,
+    },
+    {
+      name: "Diameter and Fraction Value",
+      selector: (row) => row.age,
+    },
+    {
+      name: "Price",
+      selector: (row) => row.age,
+    },
+    {
+      name: "Tracking ",
+      selector: (row) => row.age,
+    },
+    {
+      name: "Date ",
+      selector: (row) => row.age,
     },
   ];
 
@@ -106,14 +135,54 @@ export const AllOrdersTable = () => {
       age: "sds",
     },
   ];
+
+  const customStyles = {
+    tableWrapper: {
+      style: {
+        overflow: "none",
+        width: "100%",
+      },
+    },
+    table: {
+      style: {
+        border: "1px solid #ddd",
+      },
+    },
+    rows: {
+      style: {
+        minHeight: "52px", // override the row height
+        fontSize: "20px",
+        textAlign: "center",
+        "&:hover": {
+          backgroundColor: "#f0f0f0",
+        },
+      },
+    },
+    headCells: {
+      style: {
+        textAlign: "center",
+        fontSize: "20px",
+        fontWeight: "bolder",
+        backgroundColor: "#6b7280",
+        color: "#fff",
+      },
+    },
+    cells: {
+      style: {
+        textAlign: "center",
+      },
+    },
+  };
+
   return (
     <>
       <DataTable
-        className="bg-darkSecondary"
         columns={columns}
         data={data}
-        fixedHeader
         pagination
+        customStyles={customStyles}
+        striped
+        // progressPending={<h1>loading...</h1>}
       />
     </>
   );
