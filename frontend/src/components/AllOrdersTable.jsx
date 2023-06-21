@@ -1,138 +1,89 @@
 import DataTable from "react-data-table-component";
-import fetchOrdersFunc from "../Zustand/AllOrdersApiCall";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const AllOrdersTable = () => {
-  const { isLoading, isError, message, isSuccess } = fetchOrdersFunc();
+  const [data1, setData] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const apiCall = async () => {
+      const response = await axios.get(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+      setData(response.data);
+      console.log(data1);
+    };
+    apiCall();
+  }, []);
 
   const columns = [
     {
       name: "orderNo",
       selector: (row) => row.name,
       sortable: true,
-      style: {
-        maxWidth: "150px", // Adjust the maximum width of the column
-      },
+      maxWidth: "200px",
+      minWidth: "200px",
     },
     {
       name: "Thickness",
       selector: (row) => row.email,
-      style: {
-        maxWidth: "150px", // Adjust the maximum width of the column
-      },
+      maxWidth: "200px",
+      minWidth: "200px",
     },
     {
-      name: "Length and Fraction Value",
-      selector: (row) => row.age,
+      name: "Length & F Value",
+      selector: (row) => row.id,
+      maxWidth: "200px",
+      minWidth: "200px",
     },
     {
-      name: "Width and Fraction Value",
-      selector: (row) => row.age,
+      name: "Width & F Value",
+      selector: (row) => row.address.street,
+      maxWidth: "200px",
+      minWidth: "200px",
     },
     {
-      name: "Diameter and Fraction Value",
-      selector: (row) => row.age,
+      name: "Diameter & F Value",
+      selector: (row) => row.address.city,
+      maxWidth: "200px",
+      minWidth: "200px",
     },
     {
       name: "Price",
-      selector: (row) => row.age,
+      selector: (row) => row.address.zipcode,
+      maxWidth: "200px",
+      minWidth: "200px",
     },
     {
-      name: "Tracking ",
-      selector: (row) => row.age,
+      name: "Tracking",
+      selector: (row) => row.address.suite,
+      maxWidth: "200px",
+      minWidth: "200px",
     },
     {
-      name: "Date ",
-      selector: (row) => row.age,
-    },
-  ];
-
-  const data = [
-    {
-      id: 1,
-      name: "ali",
-      email: "al1@gamil.columns",
-      age: "32",
+      name: "Date",
+      selector: (row) => row.username,
+      maxWidth: "203px",
+      minWidth: "203px",
     },
     {
-      id: 2,
-      name: "adsd",
-      email: "al1@gamil.columns",
-      age: "32sas",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
-    },
-    {
-      id: 3,
-      name: "asdsds",
-      email: "alsd1@gamil.columns",
-      age: "sds",
+      name: "Action",
+      cell: (row) => (
+        <>
+          <button
+            className="bg-blue-500 h-9 w-20 mr-3 hover:bg-blue-700 "
+            onClick={() => console.log("loru")}
+          >
+            View
+          </button>
+          <button
+            className="bg-blue-500 h-9 w-24 hover:bg-blue-700 "
+            onClick={() => console.log("loru")}
+          >
+            Update
+          </button>
+        </>
+      ),
     },
   ];
 
@@ -140,7 +91,7 @@ export const AllOrdersTable = () => {
     tableWrapper: {
       style: {
         overflow: "none",
-        width: "100%",
+        width: "10  0%",
       },
     },
     table: {
@@ -152,24 +103,30 @@ export const AllOrdersTable = () => {
       style: {
         minHeight: "52px", // override the row height
         fontSize: "20px",
-        textAlign: "center",
+        // backgroundColor: "#3f3f46",
+        color: "white",
         "&:hover": {
-          backgroundColor: "#f0f0f0",
+          backgroundColor: "#71717a",
         },
       },
     },
     headCells: {
       style: {
-        textAlign: "center",
         fontSize: "20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         fontWeight: "bolder",
-        backgroundColor: "#6b7280",
+        backgroundColor: "#262424",
         color: "#fff",
       },
     },
     cells: {
       style: {
         textAlign: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       },
     },
   };
@@ -178,11 +135,11 @@ export const AllOrdersTable = () => {
     <>
       <DataTable
         columns={columns}
-        data={data}
+        data={data1}
         pagination
         customStyles={customStyles}
-        striped
-        // progressPending={<h1>loading...</h1>}
+        // striped
+        theme="dark"
       />
     </>
   );

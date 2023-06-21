@@ -1,32 +1,15 @@
-import React, { useEffect } from "react";
 import { useState } from "react";
-import useCreateOrdersStore from "../Zustand/useCreateOrdersStore";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export const AddNewOrders = () => {
-  const { isLoading, isError, createOrder, isCreated } = useCreateOrdersStore();
-
-  const [orderNumbers, setOrderNumbers] = useState("");
-
   const navigate = useNavigate();
-  useEffect(() => {
-    if (isCreated === true) {
-      toast.success("Orders Created successfully");
-      setOrderNumbers("");
-    }
-    if (isError) {
-      toast.error("Failed to Create orders");
-    }
-  }, [isCreated]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createOrder({ orderNumbers });
   };
   return (
     <>
-      <Toaster position="top-right" reverseOrder={false} />
       <section className="container mx-auto max-w-6xl p-4 h-screen z-10 text-center text-white">
         <p className="text-2xl font-bold">Create New Orders</p>
         <p>Please add space or line break between order numbers</p>
@@ -44,7 +27,6 @@ export const AddNewOrders = () => {
           >
             Save Orders
           </button>
-          {isLoading ? <p>inserting data ....</p> : ""}
         </div>
       </section>
     </>

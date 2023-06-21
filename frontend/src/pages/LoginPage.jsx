@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import useAuthStore from "../Zustand/useAuthStore";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -9,21 +8,8 @@ export const LoginPage = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const { isLoading, isError, isAuthenticated, login } = useAuthStore();
-
-  useEffect(() => {
-    if (isError) {
-      toast.error("Invalid Credentials ");
-    }
-    if (isAuthenticated) {
-      toast.success("logged in Sucessfully");
-      navigate("/");
-    }
-  }, [isAuthenticated, isError]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(userName, password);
   };
 
   return (
@@ -55,10 +41,6 @@ export const LoginPage = () => {
             >
               Login
             </button>
-            {isLoading && <p className="text-center mb-5">Loading...</p>}
-            {isError && (
-              <p className="text-center mb-5">Error while Logging in</p>
-            )}
           </form>
         </div>
       </section>
