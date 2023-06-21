@@ -16,7 +16,7 @@ export const AllOrdersTable = () => {
 
   const handleViewClick = (row) => {
     console.log("View button clicked for ID:", row.name);
-    const id = openModal();
+    const id = openModal(id);
   };
 
   useEffect(() => {
@@ -158,9 +158,10 @@ export const AllOrdersTable = () => {
       />
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="absolute bg-white rounded p-8">
+          <div className="absolute inset-0 bg-darkSecondary opacity-70"></div>
+          <div className="absolute bg-darkSecondary rounded-md shadow-2xl h-[60%] w-[70%] border border-l-lightPrimary p-8">
             <h2 className="text-xl font-bold mb-4">Modal Content</h2>
-            <p className="text-black">This is the modal content.</p>
+            <p>This is the modal content.</p>
             <button
               className="bg-blue-500 text-white rounded px-4 py-2 mt-4 hover:bg-blue-700"
               onClick={closeModal}
