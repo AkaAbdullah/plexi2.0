@@ -4,6 +4,20 @@ import axios from "axios";
 
 export const AllOrdersTable = () => {
   const [data1, setData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleViewClick = (row) => {
+    console.log("View button clicked for ID:", row.name);
+    const id = openModal();
+  };
 
   useEffect(() => {
     const apiCall = async () => {
@@ -71,8 +85,9 @@ export const AllOrdersTable = () => {
       cell: (row) => (
         <>
           <button
-            className="bg-blue-500 h-9 w-20 mr-3 hover:bg-blue-700 "
-            onClick={() => console.log("loru")}
+            popovertarget="popever"
+            className=" bg-blue-500 h-9 w-20 mr-3 hover:bg-blue-700 "
+            onClick={() => handleViewClick(row)}
           >
             View
           </button>
@@ -91,7 +106,7 @@ export const AllOrdersTable = () => {
     tableWrapper: {
       style: {
         overflow: "none",
-        width: "10  0%",
+        width: "100%",
       },
     },
     table: {
@@ -141,6 +156,20 @@ export const AllOrdersTable = () => {
         // striped
         theme="dark"
       />
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="absolute bg-white rounded p-8">
+            <h2 className="text-xl font-bold mb-4">Modal Content</h2>
+            <p className="text-black">This is the modal content.</p>
+            <button
+              className="bg-blue-500 text-white rounded px-4 py-2 mt-4 hover:bg-blue-700"
+              onClick={closeModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
