@@ -16,7 +16,7 @@ export const AllOrdersTable = () => {
 
   const handleViewClick = (row) => {
     console.log("View button clicked for ID:", row.name);
-    const id = openModal(id);
+    openModal();
   };
 
   useEffect(() => {

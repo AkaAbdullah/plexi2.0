@@ -1,15 +1,51 @@
 import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserFunction, reset } from "../redux/users/authSlice";
 
 export const LoginPage = () => {
-  //Login User Logic
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    if (isSuccess || user) {
+      toast.success("Logged in Successfully");
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [isError, user, navigate, isSuccess, message, dispatch]);
+
+  //Login User Logic
+  const [formData, setFormData] = useState({
+    userName: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const { userName, password } = formData;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const userLoginData = {
+      userName,
+      password,
+    };
+    dispatch(loginUserFunction(userLoginData));
   };
 
   return (
@@ -26,14 +62,16 @@ export const LoginPage = () => {
               type="text"
               placeholder="User Name"
               autoFocus
-              onChange={(e) => setUserName(e.target.value)}
+              name="userName"
+              onChange={handleChange}
             />
             <label className="text-xl">Password</label>
             <input
               className=" bg-darkPrimary h-9 border-0   rounded-sm"
               type="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
+              name="password"
             />
             <button
               type="submit"
