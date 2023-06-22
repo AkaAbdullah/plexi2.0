@@ -3,6 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserFunction, reset } from "../redux/users/authSlice";
+import { Spinner } from "../components/Spinner";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -11,17 +12,15 @@ export const LoginPage = () => {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-
   useEffect(() => {
     if (isError) {
-      console.log(message);
+      toast.error("Failed to login invalid username or password");
     }
 
     if (isSuccess || user) {
       toast.success("Logged in Successfully");
       navigate("/");
     }
-    dispatch(reset());
   }, [isError, user, navigate, isSuccess, message, dispatch]);
 
   //Login User Logic
@@ -41,6 +40,10 @@ export const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!userName || !password) {
+      toast.error("Please enter a username and password");
+      return;
+    }
     const userLoginData = {
       userName,
       password,
@@ -79,6 +82,9 @@ export const LoginPage = () => {
             >
               Login
             </button>
+            <div className="flex items-center justify-center mb-5 mt-[-40px]">
+              {isLoading && <Spinner />}
+            </div>
           </form>
         </div>
       </section>

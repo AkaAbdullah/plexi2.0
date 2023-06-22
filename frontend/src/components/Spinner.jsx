@@ -1,9 +1,9 @@
 import { TailSpin } from "react-loader-spinner";
-export const Spinner = () => {
+export const Spinner = ({ styles }) => {
   return (
     <TailSpin
-      height="50"
-      width="50"
+      height={styles.height}
+      width={styles.width}
       color="#4fa94d"
       ariaLabel="tail-spin-loading"
       radius="1"

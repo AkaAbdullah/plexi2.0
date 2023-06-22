@@ -1,6 +1,15 @@
 import { AllOrdersTable } from "../components/AllOrdersTable";
+import { useState } from "react";
 
 export const ViewAllOrders = () => {
+  // const [search, setSearch] = useState(data);
+
+  // const handleSearch = (e) => {
+  //   const result = data.filter((row) => {
+  //     return row.name.toLowerCase().includes(e.target.value.toLowerCase());
+  //   });
+  //   setSearch(result);
+  // };
   return (
     <>
       <section className="container mx-auto  max-w-full  z-10 text-white h-full ">

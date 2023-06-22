@@ -11,7 +11,7 @@ export const loginUserFunction = createAsyncThunk(
         userLoginData
       );
       if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response));
+        localStorage.setItem("user", JSON.stringify(response.data));
       }
       return response.data;
     } catch (error) {
@@ -21,6 +21,10 @@ export const loginUserFunction = createAsyncThunk(
   }
 );
 
+//logout function
+export const logoutUserFunction = createAsyncThunk("auth/logout", async () => {
+  await localStorage.removeItem("user");
+});
 //get user from local storage
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -37,7 +41,11 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      (state.isLoading = false), (state.isError = false), (state.message = "");
+      state.isLoading = false;
+      state.isError = false;
+      state.message = "";
+      state.isSuccess = false;
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
@@ -52,7 +60,10 @@ export const authSlice = createSlice({
       .addCase(loginUserFunction.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
+        state.isSuccess = false;
         state.message = action.payload;
+      })
+      .addCase(logoutUserFunction.fulfilled, (state) => {
         state.user = null;
       });
   },

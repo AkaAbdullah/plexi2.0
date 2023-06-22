@@ -9,7 +9,7 @@ const ordersSchema = mongoose.Schema(
     },
     orderNo: {
       type: String,
-      required: [true, "Please add a order number"],
+      required: [true, "Please add an order number"],
       unique: true,
     },
     orderDetails: {
@@ -17,7 +17,7 @@ const ordersSchema = mongoose.Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: { currentTime: () => new Date().toLocaleDateString("en-PK") },
   }
 );
 

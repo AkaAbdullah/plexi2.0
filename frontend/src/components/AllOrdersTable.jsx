@@ -1,17 +1,28 @@
 import DataTable from "react-data-table-component";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { Modal } from "./Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrders } from "../redux/orders/ordersSlice";
+import { Spinner } from "../components/Spinner";
 
 export const AllOrdersTable = () => {
-  const [data1, setData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { orders, isLoading, isError, message } = useSelector(
+    (state) => state.orders
+  );
+
+  useEffect(() => {
+    dispatch(getAllOrders());
+    console.log(orders);
+  }, []);
 
   const openModal = () => {
-    setIsModalOpen(true);
+    setIsOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsOpen(false);
   };
 
   const handleViewClick = (row) => {
@@ -19,87 +30,103 @@ export const AllOrdersTable = () => {
     openModal();
   };
 
-  useEffect(() => {
-    const apiCall = async () => {
-      const response = await axios.get(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      setData(response.data);
-      console.log(data1);
-    };
-    apiCall();
-  }, []);
-
   const columns = [
     {
       name: "orderNo",
-      selector: (row) => row.name,
+      selector: (row) => row.orderNo,
       sortable: true,
       maxWidth: "200px",
       minWidth: "200px",
     },
     {
-      name: "Thickness",
-      selector: (row) => row.email,
-      maxWidth: "200px",
-      minWidth: "200px",
-    },
-    {
-      name: "Length & F Value",
-      selector: (row) => row.id,
-      maxWidth: "200px",
-      minWidth: "200px",
-    },
-    {
-      name: "Width & F Value",
-      selector: (row) => row.address.street,
-      maxWidth: "200px",
-      minWidth: "200px",
-    },
-    {
-      name: "Diameter & F Value",
-      selector: (row) => row.address.city,
-      maxWidth: "200px",
-      minWidth: "200px",
-    },
-    {
-      name: "Price",
-      selector: (row) => row.address.zipcode,
-      maxWidth: "200px",
-      minWidth: "200px",
-    },
-    {
-      name: "Tracking",
-      selector: (row) => row.address.suite,
-      maxWidth: "200px",
-      minWidth: "200px",
-    },
-    {
-      name: "Date",
-      selector: (row) => row.username,
-      maxWidth: "203px",
-      minWidth: "203px",
-    },
-    {
-      name: "Action",
+      name: "Order Details",
       cell: (row) => (
-        <>
-          <button
-            popovertarget="popever"
-            className=" bg-blue-500 h-9 w-20 mr-3 hover:bg-blue-700 "
-            onClick={() => handleViewClick(row)}
-          >
-            View
-          </button>
-          <button
-            className="bg-blue-500 h-9 w-24 hover:bg-blue-700 "
-            onClick={() => console.log("loru")}
-          >
-            Update
-          </button>
-        </>
+        <div>
+          <table className="flex gap-5 flex-col">
+            <thead className="gap-5">
+              <tr className="gap-5">
+                <th>Thickness</th>
+                <th>Length</th>
+                <th>Width</th>
+                <th>Diameter</th>
+              </tr>
+            </thead>
+            <tbody>
+              {row.orderDetails.map((detail, index) => (
+                <tr key={index}>
+                  <td>{detail.thickness}</td>
+                  <td>{detail.length}</td>
+                  <td>{detail.width}</td>
+                  <td>{detail.diameter}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ),
     },
+    // {
+    //   name: "Thickness",
+    //   selector: (row) => row.orderDetails.length,
+    //   maxWidth: "200px",
+    //   minWidth: "200px",
+    // },
+    // {
+    //   name: "Length & F Value",
+    //   selector: (row) => row.id,
+    //   maxWidth: "200px",
+    //   minWidth: "200px",
+    // },
+    // {
+    //   name: "Width & F Value",
+    //   selector: (row) => row.address.street,
+    //   maxWidth: "200px",
+    //   minWidth: "200px",
+    // },
+    // {
+    //   name: "Diameter & F Value",
+    //   selector: (row) => row.address.city,
+    //   maxWidth: "200px",
+    //   minWidth: "200px",
+    // },
+    // {
+    //   name: "Price",
+    //   selector: (row) => row.address.zipcode,
+    //   maxWidth: "200px",
+    //   minWidth: "200px",
+    // },
+    // {
+    //   name: "Tracking",
+    //   selector: (row) => row.address.suite,
+    //   maxWidth: "200px",
+    //   minWidth: "200px",
+    // },
+    // {
+    //   name: "Date",
+    //   selector: (row) => row.username,
+    //   maxWidth: "203px",
+    //   minWidth: "203px",
+    // },
+    // {
+    //   name: "Action",
+    //   cell: (row) => (
+    //     <>
+    //       <button
+    //         popovertarget="popever"
+    //         className=" bg-blue-500 h-9 w-20 mr-3 hover:bg-blue-700 "
+    //         onClick={() => handleViewClick(row)}
+    //       >
+    //         View
+    //       </button>
+    //       <button
+    //         className="bg-blue-500 h-9 w-24 hover:bg-blue-700 "
+    //         onClick={() => console.log("loru")}
+    //       >
+    //         Update
+    //       </button>
+    //     </>
+    //   ),
+    // },
   ];
 
   const customStyles = {
@@ -146,31 +173,29 @@ export const AllOrdersTable = () => {
     },
   };
 
+  // setting the spinner size
+  const styles = {
+    height: "200",
+    width: "200",
+  };
+
+  if (isLoading) {
+    return <Spinner styles={styles} />;
+  }
   return (
     <>
-      <DataTable
-        columns={columns}
-        data={data1}
-        pagination
-        customStyles={customStyles}
-        // striped
-        theme="dark"
-      />
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="absolute inset-0 bg-darkSecondary opacity-70"></div>
-          <div className="absolute bg-darkSecondary rounded-md shadow-2xl h-[60%] w-[70%] border border-l-lightPrimary p-8">
-            <h2 className="text-xl font-bold mb-4">Modal Content</h2>
-            <p>This is the modal content.</p>
-            <button
-              className="bg-blue-500 text-white rounded px-4 py-2 mt-4 hover:bg-blue-700"
-              onClick={closeModal}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+      {orders && orders.length > 0 ? (
+        <DataTable
+          columns={columns}
+          data={orders}
+          pagination
+          customStyles={customStyles}
+          theme="dark"
+        />
+      ) : (
+        <p>No orders found.</p>
       )}
+      <Modal isOpen={isOpen} closeModal={closeModal} />
     </>
   );
 };

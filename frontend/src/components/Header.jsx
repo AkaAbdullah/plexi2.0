@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUserFunction, reset } from "../redux/users/authSlice";
 
 export const Header = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
   const [nav, setNav] = useState(false);
   const navigate = useNavigate();
   const handleNav = () => {
@@ -10,8 +15,11 @@ export const Header = () => {
   };
 
   const handleLogout = () => {
+    dispatch(logoutUserFunction());
+    dispatch(reset());
     navigate("/login");
   };
+  //Reset logout state
 
   return (
     <>
@@ -23,16 +31,24 @@ export const Header = () => {
           <div className="hidden md:flex gap-5 text-xl  font-bold  px-6">
             <Link to="/">View Todays Orders</Link>
             <Link to="/">Add new Orders</Link>
-            <button
-              className="bg-orange-600  hover:bg-teal-500 w-24 text-center   rounded-md"
-              onClick={handleLogout}
-              to="/login"
-            >
-              Logout
-            </button>
-            <Link to="/login">Login</Link>
+            {user !== null ? (
+              <button
+                className="bg-orange-600  hover:bg-teal-500 w-24 text-center   rounded-md"
+                onClick={handleLogout}
+                to="/login"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                className="bg-orange-600  hover:bg-teal-500 w-24 text-center   rounded-md"
+                to="/login"
+              >
+                Login
+              </Link>
+            )}
             <p className="text-orange-400 text-base underline">
-              Logged in as :
+              Logged in as : {user.userName}
             </p>
           </div>
           <div onClick={handleNav} className="md:hidden text-4xl">
