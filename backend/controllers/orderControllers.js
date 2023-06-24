@@ -11,7 +11,8 @@ const getOrders = asyncHandler(async (req, res) => {
 
 // create Order
 const createOrder = asyncHandler(async (req, res) => {
-  const { orderNo, orderDetails } = req.body;
+  const { orderNo, orderDetails, tracking, shippingCost, timestamps } =
+    req.body;
   //cheking if the field is empty
   if (orderNo.length === 0) {
     res.status(400);
@@ -25,11 +26,21 @@ const createOrder = asyncHandler(async (req, res) => {
     throw new Error("Order already exists");
   }
 
+  //Set the data
+  const date = new Date();
+
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  let currentDate = `${day}-${month}-${year}`;
   // Create the order
   const order = await ORDERS.create({
     orderNo,
     orderDetails,
     orderCreatedBy: req.user.id,
+    tracking,
+    shippingCost,
+    createdAt: currentDate,
   });
 
   res.status(201).json(order);

@@ -1,24 +1,30 @@
 const mongoose = require("mongoose");
 
-const ordersSchema = mongoose.Schema(
-  {
-    orderCreatedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "USERS",
-    },
-    orderNo: {
-      type: String,
-      required: [true, "Please add an order number"],
-      unique: true,
-    },
-    orderDetails: {
-      type: Array,
-    },
+const ordersSchema = mongoose.Schema({
+  orderCreatedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "USERS",
   },
-  {
-    timestamps: { currentTime: () => new Date().toLocaleDateString("en-PK") },
-  }
-);
+  orderNo: {
+    type: String,
+    required: [true, "Please add an order number"],
+    unique: true,
+  },
+  tracking: {
+    type: String,
+  },
+
+  shippingCost: {
+    type: String,
+  },
+
+  orderDetails: {
+    type: Array,
+  },
+  createdAt: {
+    type: String,
+  },
+});
 
 module.exports = mongoose.model("ORDERS", ordersSchema);

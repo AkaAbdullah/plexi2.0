@@ -31,7 +31,7 @@ export const Header = () => {
           <div className="hidden md:flex gap-5 text-xl  font-bold  px-6">
             <Link to="/">View Todays Orders</Link>
             <Link to="/">Add new Orders</Link>
-            {user !== null ? (
+            {user ? (
               <button
                 className="bg-orange-600  hover:bg-teal-500 w-24 text-center   rounded-md"
                 onClick={handleLogout}
@@ -48,7 +48,7 @@ export const Header = () => {
               </Link>
             )}
             <p className="text-orange-400 text-base underline">
-              Logged in as : {user.userName}
+              Logged in as : {user ? <> {user.userName}</> : ""}
             </p>
           </div>
           <div onClick={handleNav} className="md:hidden text-4xl">

@@ -41,23 +41,23 @@ export const AllOrdersTable = () => {
     {
       name: "Order Details",
       cell: (row) => (
-        <div>
-          <table className="flex gap-5 flex-col">
-            <thead className="gap-5">
-              <tr className="gap-5">
-                <th>Thickness</th>
-                <th>Length</th>
-                <th>Width</th>
-                <th>Diameter</th>
+        <div className="flex flex-col items-center gap-4">
+          <table>
+            <thead>
+              <tr className="flex gap-10">
+                <th className="flex-grow  w-32 ">Thickness</th>
+                <th className="flex-grow  w-32">Length</th>
+                <th className="flex-grow text-center w-32 ">Width</th>
+                <th className="flex-grow w-32">Diameter</th>
               </tr>
             </thead>
             <tbody>
               {row.orderDetails.map((detail, index) => (
-                <tr key={index}>
-                  <td>{detail.thickness}</td>
-                  <td>{detail.length}</td>
-                  <td>{detail.width}</td>
-                  <td>{detail.diameter}</td>
+                <tr key={index} className="flex gap-10  ">
+                  <td className="flex-grow  w-32 h-12 ">{detail.thickness}</td>
+                  <td className="flex-grow w-32">{detail.length}</td>
+                  <td className="flex-grow w-32 ">{detail.width}</td>
+                  <td className="flex-grow w-32">{detail.diameter}</td>
                 </tr>
               ))}
             </tbody>
@@ -65,68 +65,47 @@ export const AllOrdersTable = () => {
         </div>
       ),
     },
-    // {
-    //   name: "Thickness",
-    //   selector: (row) => row.orderDetails.length,
-    //   maxWidth: "200px",
-    //   minWidth: "200px",
-    // },
-    // {
-    //   name: "Length & F Value",
-    //   selector: (row) => row.id,
-    //   maxWidth: "200px",
-    //   minWidth: "200px",
-    // },
-    // {
-    //   name: "Width & F Value",
-    //   selector: (row) => row.address.street,
-    //   maxWidth: "200px",
-    //   minWidth: "200px",
-    // },
-    // {
-    //   name: "Diameter & F Value",
-    //   selector: (row) => row.address.city,
-    //   maxWidth: "200px",
-    //   minWidth: "200px",
-    // },
-    // {
-    //   name: "Price",
-    //   selector: (row) => row.address.zipcode,
-    //   maxWidth: "200px",
-    //   minWidth: "200px",
-    // },
-    // {
-    //   name: "Tracking",
-    //   selector: (row) => row.address.suite,
-    //   maxWidth: "200px",
-    //   minWidth: "200px",
-    // },
-    // {
-    //   name: "Date",
-    //   selector: (row) => row.username,
-    //   maxWidth: "203px",
-    //   minWidth: "203px",
-    // },
-    // {
-    //   name: "Action",
-    //   cell: (row) => (
-    //     <>
-    //       <button
-    //         popovertarget="popever"
-    //         className=" bg-blue-500 h-9 w-20 mr-3 hover:bg-blue-700 "
-    //         onClick={() => handleViewClick(row)}
-    //       >
-    //         View
-    //       </button>
-    //       <button
-    //         className="bg-blue-500 h-9 w-24 hover:bg-blue-700 "
-    //         onClick={() => console.log("loru")}
-    //       >
-    //         Update
-    //       </button>
-    //     </>
-    //   ),
-    // },
+
+    {
+      name: "Tracking No",
+      selector: (row) => row.tracking,
+      maxWidth: "200px",
+      minWidth: "200px",
+    },
+    {
+      name: "Cost",
+      selector: (row) => row.shippingCost,
+      maxWidth: "200px",
+      minWidth: "200px",
+    },
+    {
+      name: "Date",
+      selector: (row) => row.createdAt,
+      maxWidth: "200px",
+      minWidth: "200px",
+    },
+
+    {
+      name: "Action",
+      maxWidth: "200px",
+      minWidth: "200px",
+      cell: (row) => (
+        <>
+          <button
+            className=" bg-blue-500 h-9 w-20 mr-3 hover:bg-blue-700 "
+            onClick={() => handleViewClick(row)}
+          >
+            View
+          </button>
+          <button
+            className="bg-blue-500 h-9 w-24 hover:bg-blue-700 "
+            onClick={() => console.log("loru")}
+          >
+            Update
+          </button>
+        </>
+      ),
+    },
   ];
 
   const customStyles = {
@@ -173,7 +152,7 @@ export const AllOrdersTable = () => {
     },
   };
 
-  // setting the spinner size
+  // setting the spinner size props
   const styles = {
     height: "200",
     width: "200",

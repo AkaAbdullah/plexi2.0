@@ -51,6 +51,11 @@ export const LoginPage = () => {
     dispatch(loginUserFunction(userLoginData));
   };
 
+  const styles = {
+    height: "40",
+    width: "40",
+  };
+
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
@@ -83,7 +88,7 @@ export const LoginPage = () => {
               Login
             </button>
             <div className="flex items-center justify-center mb-5 mt-[-40px]">
-              {isLoading && <Spinner />}
+              {isLoading && <Spinner styles={styles} />}
             </div>
           </form>
         </div>
