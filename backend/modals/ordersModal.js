@@ -11,8 +11,11 @@ const ordersSchema = mongoose.Schema({
     required: [true, "Please add an order number"],
     unique: true,
   },
-  tracking: {
+  marketPlaceOrderId: {
     type: String,
+  },
+  tracking: {
+    type: Object,
   },
 
   shippingCost: {

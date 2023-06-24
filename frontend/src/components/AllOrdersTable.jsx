@@ -49,6 +49,7 @@ export const AllOrdersTable = () => {
                 <th className="flex-grow  w-32">Length</th>
                 <th className="flex-grow text-center w-32 ">Width</th>
                 <th className="flex-grow w-32">Diameter</th>
+                <th className="flex-grow w-32">Quantity</th>
               </tr>
             </thead>
             <tbody>
@@ -58,6 +59,7 @@ export const AllOrdersTable = () => {
                   <td className="flex-grow w-32">{detail.length}</td>
                   <td className="flex-grow w-32 ">{detail.width}</td>
                   <td className="flex-grow w-32">{detail.diameter}</td>
+                  <td className="flex-grow w-32">{detail.quantity}</td>
                 </tr>
               ))}
             </tbody>

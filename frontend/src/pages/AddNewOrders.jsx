@@ -3,8 +3,8 @@ import { useState } from "react";
 export const AddNewOrders = () => {
   const [shape, setShape] = useState("");
   const [newLines, setNewLines] = useState([]);
-  const [orderNo, setOrderNo] = useState("");
   const [showTrackingBox, setShowTrackingBox] = useState(false);
+  const [childTracking, setChildTracking] = useState([]);
 
   const handleTracking = () => {
     setShowTrackingBox(true);
@@ -13,8 +13,39 @@ export const AddNewOrders = () => {
     setShape(event.target.value);
   };
 
-  const handleAddLine = () => {
+  const handleAddLine = (e) => {
+    e.preventDefault();
     setNewLines((prevLines) => [...prevLines, {}]);
+  };
+
+  const handleChilTracking = (e) => {
+    e.preventDefault();
+    setChildTracking((prevTracking) => [...prevTracking, {}]);
+  };
+
+  //State for getting form Data
+  const [formData, setFormData] = useState(null);
+
+  const [orderNo, setOrderNo] = useState("");
+  const [orderId, setOrderId] = useState("");
+  const [tracking, setTracking] = useState({});
+  const [cost, setCost] = useState("");
+  const [orderDetails, setOrderDetails] = useState([]);
+
+  const handleInputChange = (index, name, value) => {
+    setOrderDetails((prevOrderDetails) => {
+      const updatedOrderDetails = [...prevOrderDetails];
+      updatedOrderDetails[index] = {
+        ...updatedOrderDetails[index],
+        [name]: value,
+      };
+      return updatedOrderDetails;
+    });
+  };
+
+  const handleFromData = (e) => {
+    e.preventDefault();
+    console.log(orderDetails);
   };
 
   return (
@@ -31,6 +62,7 @@ export const AddNewOrders = () => {
               placeholder="5000456376"
               required
               type="text"
+              name="orderNo"
               onChange={(e) => setOrderNo(e.target.value)}
             />
             <label className="text-2xl">Market Place Order id</label>
@@ -39,12 +71,18 @@ export const AddNewOrders = () => {
               autoFocus
               placeholder="10083-348848-2333"
               type="text"
+              name="marketPlaceOrderId"
+              onChange={(e) => setOrderId(e.target.value)}
             />
             <label className="text-2xl">Thickness</label>
             <input
               className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
               autoFocus
               type="text"
+              name="thickness"
+              onChange={(e) =>
+                handleInputChange(0, e.target.name, e.target.value)
+              }
             />
             <label className="text-2xl">Select Shape</label>
             <select
@@ -70,12 +108,20 @@ export const AddNewOrders = () => {
                   className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
                   autoFocus
                   type="text"
+                  name="length"
+                  onChange={(e) =>
+                    handleInputChange(0, e.target.name, e.target.value)
+                  }
                 />
                 <label className="text-2xl">Width & Fraction Value</label>
                 <input
                   className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
                   autoFocus
                   type="text"
+                  name="width"
+                  onChange={(e) =>
+                    handleInputChange(0, e.target.name, e.target.value)
+                  }
                 />
               </>
             )}
@@ -87,23 +133,10 @@ export const AddNewOrders = () => {
                   className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
                   autoFocus
                   type="text"
-                />
-              </>
-            )}
-
-            {shape !== "" && shape !== "rectangle" && shape !== "circle" && (
-              <>
-                <label className="text-2xl">Length & Fraction Value</label>
-                <input
-                  className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
-                  autoFocus
-                  type="text"
-                />
-                <label className="text-2xl">Width & Fraction Value</label>
-                <input
-                  className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
-                  autoFocus
-                  type="text"
+                  name="diameter"
+                  onChange={(e) =>
+                    handleInputChange(0, e.target.name, e.target.value)
+                  }
                 />
               </>
             )}
@@ -113,13 +146,21 @@ export const AddNewOrders = () => {
               className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
               autoFocus
               type="text"
+              name="quantity"
+              onChange={(e) =>
+                handleInputChange(0, e.target.name, e.target.value)
+              }
             />
             {/* Display new line forms */}
             {newLines.map((line, index) => (
-              <NewLineForm key={index} />
+              <NewLineForm handleInputChange={handleInputChange} key={index} />
             ))}
             <div className="flex mt-3 items-center justify-evenly gap-10 ">
-              <button className="text-2xl bg-orange-600 w-1/2 h-16 rounded-full hover:bg-blue-600">
+              <button
+                onClick={handleFromData}
+                type="submit"
+                className="text-2xl bg-orange-600 w-1/2 h-16 rounded-full hover:bg-blue-600"
+              >
                 Save Order
               </button>
 
@@ -148,6 +189,7 @@ export const AddNewOrders = () => {
                 autoFocus
                 placeholder="7563542788949"
                 type="text"
+                name="tracking"
               />
               <label className="text-2xl">Shipping Cost</label>
               <input
@@ -155,8 +197,16 @@ export const AddNewOrders = () => {
                 autoFocus
                 placeholder="13.90"
                 type="text"
+                name="price"
+                onChange={(e) => setCost(e.target.value)}
               />
-              <button className=" text-xl h-11 w-full rounded-lg mb-5 mt-5 hover:bg-blue-600 bg-orange-600 ">
+              {childTracking.map((line, index) => (
+                <ChildTrackingForm key={index} />
+              ))}
+              <button
+                onClick={handleChilTracking}
+                className=" text-xl h-11 w-full rounded-lg mb-5 mt-5 hover:bg-blue-600 bg-orange-600 "
+              >
                 Add Child Tracking Number
               </button>
             </form>
@@ -167,8 +217,11 @@ export const AddNewOrders = () => {
   );
 };
 
-const NewLineForm = () => {
+const NewLineForm = ({ handleInputChange }) => {
   const [shape1, setShape1] = useState("");
+  const handleInput = (index, name, value) => {
+    handleInputChange(index, name, value);
+  };
 
   const handleShapeChange1 = (event) => {
     setShape1(event.target.value);
@@ -183,6 +236,8 @@ const NewLineForm = () => {
           className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
           autoFocus
           type="text"
+          name="thickness"
+          onChange={(e) => handleInput(1, e.target.name, e.target.value)}
         />
         <label className="text-2xl">Select Shape</label>
         <select
@@ -207,12 +262,16 @@ const NewLineForm = () => {
               className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
               autoFocus
               type="text"
+              name="length"
+              onChange={(e) => handleInput(1, e.target.name, e.target.value)}
             />
             <label className="text-2xl">Width & Fraction Value</label>
             <input
               className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
               autoFocus
               type="text"
+              name="width"
+              onChange={(e) => handleInput(1, e.target.name, e.target.value)}
             />
           </>
         )}
@@ -224,23 +283,8 @@ const NewLineForm = () => {
               className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
               autoFocus
               type="text"
-            />
-          </>
-        )}
-
-        {shape1 !== "" && shape1 !== "rectangle" && shape1 !== "circle" && (
-          <>
-            <label className="text-2xl">Length & Fraction Value</label>
-            <input
-              className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
-              autoFocus
-              type="text"
-            />
-            <label className="text-2xl">Width & Fraction Value</label>
-            <input
-              className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
-              autoFocus
-              type="text"
+              name="diameter"
+              onChange={(e) => handleInput(1, e.target.name, e.target.value)}
             />
           </>
         )}
@@ -250,8 +294,22 @@ const NewLineForm = () => {
           className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
           autoFocus
           type="text"
+          name="quantity"
+          onChange={(e) => handleInput(1, e.target.name, e.target.value)}
         />
       </form>
+    </>
+  );
+};
+
+const ChildTrackingForm = () => {
+  return (
+    <>
+      <input
+        className="h-10 bg-transparent focus:bg-white focus:text-black border rounded-md border-teal-100 text-2xl"
+        autoFocus
+        type="text"
+      />
     </>
   );
 };

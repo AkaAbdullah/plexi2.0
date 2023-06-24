@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -25,11 +26,35 @@ export const getAllOrders = createAsyncThunk(
   }
 );
 
+//POST Request Creating Orders
+export const CreateOrders = createAsyncThunk(
+  "orders/create",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.post(
+        "http://localhost:5000/api/orders",
+        config
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const initialState = {
   orders: null,
   isLoading: false,
   isError: false,
   message: "",
+  //only for post method
+  createdOrder: null,
 };
 
 export const ordersSlice = createSlice({
@@ -45,6 +70,19 @@ export const ordersSlice = createSlice({
         state.orders = action.payload;
       })
       .addCase(getAllOrders.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.error.message;
+      })
+      //POST ORDERS CASES
+      .addCase(CreateOrders.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(CreateOrders.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.createdOrder = action.payload;
+      })
+      .addCase(CreateOrders.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.error.message;
