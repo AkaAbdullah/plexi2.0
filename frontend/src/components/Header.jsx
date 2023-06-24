@@ -33,7 +33,7 @@ export const Header = () => {
             <Link to="/">Add new Orders</Link>
             {user ? (
               <button
-                className="bg-orange-600  hover:bg-teal-500 w-24 text-center   rounded-md"
+                className="bg-orange-600  hover:bg-blue-600 w-24 text-center   rounded-md"
                 onClick={handleLogout}
                 to="/login"
               >
@@ -41,7 +41,7 @@ export const Header = () => {
               </button>
             ) : (
               <Link
-                className="bg-orange-600  hover:bg-teal-500 w-24 text-center   rounded-md"
+                className="bg-orange-600  hover:bg-blue-600 w-24 text-center   rounded-md"
                 to="/login"
               >
                 Login
