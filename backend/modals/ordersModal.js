@@ -15,7 +15,7 @@ const ordersSchema = mongoose.Schema({
     type: String,
   },
   tracking: {
-    type: Object,
+    type: String,
   },
 
   shippingCost: {

@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { CreateOrders } from "../redux/orders/ordersSlice";
+import { useDispatch, useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
+import { Spinner } from "../components/Spinner";
 
 export const AddNewOrders = () => {
   const [shape, setShape] = useState("");
@@ -23,12 +27,36 @@ export const AddNewOrders = () => {
     setChildTracking((prevTracking) => [...prevTracking, {}]);
   };
 
+  //REDUX api
+  const dispatch = useDispatch();
+  const { isLoading, isError, isSuccess } = useSelector(
+    (state) => state.orders
+  );
+  useEffect(() => {
+    if (isError) {
+      toast.error("Failed To Create Order");
+    }
+    if (isSuccess) {
+      toast.success("Order Created Sucessfully");
+    }
+  }, [isError, isLoading, isSuccess]);
+
+  const styles = {
+    height: "40",
+    width: "40",
+  };
+
   //State for getting form Data
   const [formData, setFormData] = useState(null);
 
+  const handleFromData = (e) => {
+    e.preventDefault();
+    dispatch(CreateOrders(formData));
+  };
+
   const [orderNo, setOrderNo] = useState("");
   const [orderId, setOrderId] = useState("");
-  const [tracking, setTracking] = useState({});
+  const [tracking, setTracking] = useState("");
   const [cost, setCost] = useState("");
   const [orderDetails, setOrderDetails] = useState([]);
 
@@ -43,14 +71,20 @@ export const AddNewOrders = () => {
     });
   };
 
-  const handleFromData = (e) => {
-    e.preventDefault();
-    console.log(orderDetails);
-  };
+  useEffect(() => {
+    setFormData({
+      orderNo,
+      orderId,
+      tracking,
+      cost,
+      orderDetails,
+    });
+  }, [orderNo, orderId, tracking, cost, orderDetails]);
 
   return (
     <>
-      <section className="container mx-auto py-6 text-white z-10 gap-5 p-4 max-w-6xl h-full flex ">
+      <Toaster position="top-right" reverseOrder={false} />
+      <section className="container mx-auto  py-6 text-white z-10 gap-5 p-4 max-w-6xl h-full flex ">
         <div className="w-1/2 p-6 border h-fit rounded-md">
           <form className="flex flex-col gap-3">
             <label className="text-2xl">
@@ -190,6 +224,7 @@ export const AddNewOrders = () => {
                 placeholder="7563542788949"
                 type="text"
                 name="tracking"
+                onChange={(e) => setTracking(e.target.value)}
               />
               <label className="text-2xl">Shipping Cost</label>
               <input
@@ -197,7 +232,7 @@ export const AddNewOrders = () => {
                 autoFocus
                 placeholder="13.90"
                 type="text"
-                name="price"
+                name="cost"
                 onChange={(e) => setCost(e.target.value)}
               />
               {childTracking.map((line, index) => (
@@ -209,6 +244,7 @@ export const AddNewOrders = () => {
               >
                 Add Child Tracking Number
               </button>
+              {isLoading && <Spinner styles={styles} />}
             </form>
           )}
         </div>
@@ -229,7 +265,7 @@ const NewLineForm = ({ handleInputChange }) => {
 
   return (
     <>
-      <p className="text-2xl text-center">Add New line Details</p>
+      <p className="text-2xl text-center"> New line Details</p>
       <form className="flex flex-col gap-3">
         <label className="text-2xl">Thickness</label>
         <input
@@ -305,11 +341,7 @@ const NewLineForm = ({ handleInputChange }) => {
 const ChildTrackingForm = () => {
   return (
     <>
-      <input
-        className="h-10 bg-transparent focus:bg-white focus:text-black border rounded-md border-teal-100 text-2xl"
-        autoFocus
-        type="text"
-      />
+      <p className=" text-xl">Feature not Avalible yet</p>
     </>
   );
 };

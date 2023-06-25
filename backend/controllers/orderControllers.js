@@ -11,8 +11,7 @@ const getOrders = asyncHandler(async (req, res) => {
 
 // create Order
 const createOrder = asyncHandler(async (req, res) => {
-  const { orderNo, orderDetails, tracking, shippingCost, timestamps } =
-    req.body;
+  const { orderNo, orderId, orderDetails, tracking, cost } = req.body;
   //cheking if the field is empty
   if (orderNo.length === 0) {
     res.status(400);
@@ -36,10 +35,11 @@ const createOrder = asyncHandler(async (req, res) => {
   // Create the order
   const order = await ORDERS.create({
     orderNo,
+    marketPlaceOrderId: orderId,
     orderDetails,
     orderCreatedBy: req.user.id,
     tracking,
-    shippingCost,
+    shippingCost: cost,
     createdAt: currentDate,
   });
 
