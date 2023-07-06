@@ -28,7 +28,7 @@ router.get("/count", protect, countDocuments);
 router.post("/generateorders", protect, createMultipleOrders);
 
 //Get single order
-router.get("/:id", protect, getSingleOrder);
+router.get("/:orderNo", protect, getSingleOrder);
 //update single Order
 router.put("/:id", protect, updateOrder);
 

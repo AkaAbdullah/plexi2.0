@@ -141,9 +141,23 @@ const countDocuments = asyncHandler(async (req, res) => {
 
 //API for Getting SINGLE ORDER
 const getSingleOrder = asyncHandler(async (req, res) => {
-  const id = req.body.id;
-  const order = await ORDERS.findOne({ id });
-  res.json({ order });
+  const { orderNo } = req.params;
+
+  try {
+    // Search for the order by orderNo in the database
+    const order = await ORDERS.findOne({ orderNo });
+
+    if (!order) {
+      // If no order is found, return an error response
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // If the order is found, return it in the response
+    res.json(order);
+  } catch (error) {
+    // Handle any errors that occur during the search
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 module.exports = {

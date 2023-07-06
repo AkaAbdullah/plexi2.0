@@ -71,6 +71,32 @@ export const CountOrders = createAsyncThunk(
   }
 );
 
+//get single order
+// Get single order by order number
+export const getSingleOrder = createAsyncThunk(
+  "orders/getSingleOrder",
+  async (orderNo, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const response = await axios.get(
+        `http://localhost:5000/api/orders/${orderNo}`,
+        config
+      );
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const initialState = {
   orders: [],
   isLoading: false,
@@ -78,6 +104,7 @@ const initialState = {
   isSuccess: false,
   createdOrder: {},
   OrderCount: "",
+  singleOrder: {},
 };
 
 export const ordersSlice = createSlice({
@@ -135,6 +162,18 @@ export const ordersSlice = createSlice({
       .addCase(CountOrders.rejected, (state) => {
         state.isLoading = false;
         state.isError = false;
+      })
+      //getting single orders cases
+      .addCase(getSingleOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSingleOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.singleOrder = action.payload;
+      })
+      .addCase(getSingleOrder.rejected, (state) => {
+        state.isError = true;
+        state.isLoading = false;
       });
   },
 });

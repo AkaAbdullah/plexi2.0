@@ -6,9 +6,7 @@ import { CountOrders } from "../redux/orders/ordersSlice";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
-  const { isLoading, isError, OrderCount } = useSelector(
-    (state) => state.orders
-  );
+  const { isLoading, OrderCount } = useSelector((state) => state.orders);
 
   const styles = {
     height: "40",
