@@ -100,7 +100,6 @@ export const AddNewOrders = () => {
             <input
               className="h-10 bg-transparent focus:bg-white focus:text-black border rounded-md border-teal-100 text-2xl"
               autoFocus
-              placeholder="5000456376"
               required
               type="text"
               name="orderNo"
@@ -110,7 +109,6 @@ export const AddNewOrders = () => {
             <input
               className="h-10 bg-transparent focus:bg-white focus:text-black border rounded-md border-teal-100 text-2xl"
               autoFocus
-              placeholder="10083-348848-2333"
               type="text"
               name="marketPlaceOrderId"
               onChange={(e) => setOrderId(e.target.value)}

@@ -7,6 +7,7 @@ import { Footer } from "./components/Footer";
 import { ViewAllOrders } from "./pages/ViewAllOrders";
 import { GenrateOrders } from "./pages/GenrateOrders";
 import { AddNewOrders } from "./pages/AddNewOrders";
+import { UpdateOrders } from "./pages/UpdateOrders";
 function App() {
   return (
     <>
@@ -20,6 +21,7 @@ function App() {
           <Route path="/genrateOrders" element={<GenrateOrders />} />
           <Route path="/allorders" element={<ViewAllOrders />} />
           <Route path="/addnew" element={<AddNewOrders />} />
+          <Route path="/update" element={<UpdateOrders />} />
         </Routes>
         <Footer />
       </BrowserRouter>

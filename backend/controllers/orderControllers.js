@@ -11,7 +11,15 @@ const getOrders = asyncHandler(async (req, res) => {
 
 // create Order
 const createOrder = asyncHandler(async (req, res) => {
-  const { orderNo, orderId, orderDetails, tracking, cost } = req.body;
+  const {
+    orderNo,
+    orderId,
+    orderDetails,
+    tracking,
+    cost,
+    comments,
+    completeMarked,
+  } = req.body;
   //cheking if the field is empty
   if (orderNo.length === 0) {
     res.status(400);
@@ -25,13 +33,19 @@ const createOrder = asyncHandler(async (req, res) => {
     throw new Error("Order already exists");
   }
 
-  //Set the data
+  // Set the date
   const date = new Date();
 
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
-  let currentDate = `${day}-${month}-${year}`;
+
+  // Add leading zeros if necessary
+  const formattedDay = day < 10 ? `0${day}` : day;
+  const formattedMonth = month < 10 ? `0${month}` : month;
+
+  let currentDate = `${formattedDay}-${formattedMonth}-${year}`;
+
   // Create the order
   const order = await ORDERS.create({
     orderNo,
@@ -41,6 +55,8 @@ const createOrder = asyncHandler(async (req, res) => {
     tracking,
     shippingCost: cost,
     createdAt: currentDate,
+    comments,
+    completeMarked,
   });
 
   res.status(201).json(order);
@@ -123,6 +139,13 @@ const countDocuments = asyncHandler(async (req, res) => {
   }
 });
 
+//API for Getting SINGLE ORDER
+const getSingleOrder = asyncHandler(async (req, res) => {
+  const id = req.body.id;
+  const order = await ORDERS.findOne({ id });
+  res.json({ order });
+});
+
 module.exports = {
   getOrders,
   createOrder,
@@ -131,4 +154,5 @@ module.exports = {
   addOrderDetails,
   createMultipleOrders,
   countDocuments,
+  getSingleOrder,
 };

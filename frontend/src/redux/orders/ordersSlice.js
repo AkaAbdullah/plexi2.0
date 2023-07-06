@@ -49,12 +49,35 @@ export const CreateOrders = createAsyncThunk(
   }
 );
 
+//Orders count API call get request
+export const CountOrders = createAsyncThunk(
+  "count/get",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(
+        "http://localhost:5000/api/orders/count",
+        config
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const initialState = {
   orders: [],
   isLoading: false,
   isError: false,
   isSuccess: false,
   createdOrder: {},
+  OrderCount: "",
 };
 
 export const ordersSlice = createSlice({
@@ -100,6 +123,18 @@ export const ordersSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
+      })
+      // Counting Orders for home page cases
+      .addCase(CountOrders.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(CountOrders.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.OrderCount = action.payload;
+      })
+      .addCase(CountOrders.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = false;
       });
   },
 });

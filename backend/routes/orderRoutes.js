@@ -7,6 +7,7 @@ const {
   addOrderDetails,
   createMultipleOrders,
   countDocuments,
+  getSingleOrder,
 } = require("../controllers/orderControllers");
 
 const { protect } = require("../middlewares/authMiddleware");
@@ -26,6 +27,9 @@ router.get("/count", protect, countDocuments);
 //createmulti order route
 router.post("/generateorders", protect, createMultipleOrders);
 
+//Get single order
+router.get("/:id", protect, getSingleOrder);
+//update single Order
 router.put("/:id", protect, updateOrder);
 
 router.delete("/:id", protect, deleteOrder);

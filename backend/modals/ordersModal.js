@@ -28,6 +28,13 @@ const ordersSchema = mongoose.Schema({
   createdAt: {
     type: String,
   },
+  comments: {
+    type: String,
+  },
+  completeMarked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("ORDERS", ordersSchema);

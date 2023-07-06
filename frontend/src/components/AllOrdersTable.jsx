@@ -13,7 +13,13 @@ export const AllOrdersTable = () => {
   // Search by date
   const [showDate, setShowDate] = useState("");
 
-  const handleDateSearch = () => {};
+  const handleDateSearch = (e) => {
+    const result = orders.filter((row) => {
+      return row.createdAt.toLowerCase().includes(showDate.toString());
+    });
+    setSearch(result);
+    console.log(result);
+  };
 
   // Searching the order
   const [search, setSearch] = useState([]);
@@ -42,8 +48,11 @@ export const AllOrdersTable = () => {
     setIsOpen(false);
   };
 
+  //seding data to modal
+  const [modelData, setModalData] = useState([]);
   const handleViewClick = (row) => {
-    console.log("View button clicked for ID:", row.name);
+    setModalData(row);
+    console.log("View button clicked for ID:", row.orderNo);
     openModal();
   };
 
@@ -119,10 +128,10 @@ export const AllOrdersTable = () => {
             View
           </button>
           <button
-            className="bg-orange-500 h-9 w-20 hover:bg-blue-700 "
+            className="bg-orange-500 h-9 w-28 hover:bg-blue-700  "
             onClick={() => console.log("loru")}
           >
-            Update
+            Complete
           </button>
         </>
       ),
@@ -175,8 +184,8 @@ export const AllOrdersTable = () => {
 
   // setting the spinner size props
   const styles = {
-    height: "200",
-    width: "200",
+    height: "150",
+    width: "150",
   };
 
   if (isLoading) {
@@ -232,7 +241,7 @@ export const AllOrdersTable = () => {
       ) : (
         <p>No orders found.</p>
       )}
-      <Modal isOpen={isOpen} closeModal={closeModal} />
+      <Modal isOpen={isOpen} closeModal={closeModal} data={modelData} />
     </>
   );
 };
