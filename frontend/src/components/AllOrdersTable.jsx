@@ -8,14 +8,31 @@ import { Spinner } from "../components/Spinner";
 export const AllOrdersTable = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const { orders, isLoading, isError, message } = useSelector(
-    (state) => state.orders
-  );
+  const { orders, isLoading, isError } = useSelector((state) => state.orders);
+
+  // Search by date
+  const [showDate, setShowDate] = useState("");
+
+  const handleDateSearch = () => {};
+
+  // Searching the order
+  const [search, setSearch] = useState([]);
+
+  const handleSearch = (e) => {
+    const result = orders.filter((row) => {
+      return row.orderNo.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setSearch(result);
+  };
 
   useEffect(() => {
+    setSearch(orders);
     dispatch(getAllOrders());
-    console.log(orders);
   }, []);
+
+  useEffect(() => {
+    setSearch(orders);
+  }, [orders, showDate]);
 
   const openModal = () => {
     setIsOpen(true);
@@ -32,7 +49,7 @@ export const AllOrdersTable = () => {
 
   const columns = [
     {
-      name: "orderNo",
+      name: "OrderNo",
       selector: (row) => row.orderNo,
       sortable: true,
       maxWidth: "200px",
@@ -45,21 +62,21 @@ export const AllOrdersTable = () => {
           <table>
             <thead>
               <tr className="flex gap-10">
-                <th className="flex-grow  w-32 ">Thickness</th>
-                <th className="flex-grow  w-32">Length</th>
-                <th className="flex-grow text-center w-32 ">Width</th>
-                <th className="flex-grow w-32">Diameter</th>
-                <th className="flex-grow w-32">Quantity</th>
+                <th className="flex-grow  w-28 ">Thickness</th>
+                <th className="flex-grow  w-28">Length</th>
+                <th className="flex-grow text-center w-28 ">Width</th>
+                <th className="flex-grow w-28">Diameter</th>
+                <th className="flex-grow w-28">Quantity</th>
               </tr>
             </thead>
             <tbody>
               {row.orderDetails.map((detail, index) => (
                 <tr key={index} className="flex gap-10  ">
-                  <td className="flex-grow  w-32 h-12 ">{detail.thickness}</td>
-                  <td className="flex-grow w-32">{detail.length}</td>
-                  <td className="flex-grow w-32 ">{detail.width}</td>
-                  <td className="flex-grow w-32">{detail.diameter}</td>
-                  <td className="flex-grow w-32">{detail.quantity}</td>
+                  <td className="flex-grow  w-28 h-12 ">{detail.thickness}</td>
+                  <td className="flex-grow w-28">{detail.length}</td>
+                  <td className="flex-grow w-28 ">{detail.width}</td>
+                  <td className="flex-grow w-28">{detail.diameter}</td>
+                  <td className="flex-grow w-28">{detail.quantity}</td>
                 </tr>
               ))}
             </tbody>
@@ -79,12 +96,14 @@ export const AllOrdersTable = () => {
       selector: (row) => row.shippingCost,
       maxWidth: "200px",
       minWidth: "200px",
+      sortable: true,
     },
     {
       name: "Date",
       selector: (row) => row.createdAt,
       maxWidth: "200px",
       minWidth: "200px",
+      sortable: true,
     },
 
     {
@@ -94,13 +113,13 @@ export const AllOrdersTable = () => {
       cell: (row) => (
         <>
           <button
-            className=" bg-blue-500 h-9 w-20 mr-3 hover:bg-blue-700 "
+            className=" bg-orange-500 h-9 w-20 mr-3 hover:bg-blue-700 "
             onClick={() => handleViewClick(row)}
           >
             View
           </button>
           <button
-            className="bg-blue-500 h-9 w-24 hover:bg-blue-700 "
+            className="bg-orange-500 h-9 w-20 hover:bg-blue-700 "
             onClick={() => console.log("loru")}
           >
             Update
@@ -163,12 +182,49 @@ export const AllOrdersTable = () => {
   if (isLoading) {
     return <Spinner styles={styles} />;
   }
+  if (isError) {
+    return <p>Not Authenticated</p>;
+  }
+
   return (
     <>
+      <div className="bg-darkSecondary drop-shadow-xl text-white flex items-center h-16 p-4 ">
+        <input
+          type="text"
+          className="bg-transparent h-9 border border-gray-300  rounded-md"
+          placeholder="search order no"
+          autoFocus
+          onChange={handleSearch}
+        ></input>
+        <div>
+          <input
+            className="text-white rounded-md bg-orange-500  ml-5 h-10 text-xl  "
+            type="date"
+            onChange={(e) => {
+              const selectedDate = new Date(e.target.value);
+              const formattedDate = selectedDate
+                .toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "numeric",
+                  year: "numeric",
+                })
+                .replace(/\//g, "-");
+              setShowDate(formattedDate);
+            }}
+          />
+          <button
+            onClick={handleDateSearch}
+            className="bg-orange-500 w-32 h-10 ml-5 hover:bg-blue-600"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+
       {orders && orders.length > 0 ? (
         <DataTable
           columns={columns}
-          data={orders}
+          data={search}
           pagination
           customStyles={customStyles}
           theme="dark"

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CreateOrders } from "../redux/orders/ordersSlice";
+import { CreateOrders, reset } from "../redux/orders/ordersSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { Spinner } from "../components/Spinner";
@@ -29,21 +29,23 @@ export const AddNewOrders = () => {
 
   //REDUX api
   const dispatch = useDispatch();
-  const { isLoading, isError, isSuccess } = useSelector(
+  const { isLoading, isError, isSuccess, createdOrder } = useSelector(
     (state) => state.orders
   );
   useEffect(() => {
     if (isError) {
       toast.error("Failed To Create Order");
+      dispatch(reset());
     }
-    if (isSuccess) {
+    if (isSuccess === true) {
       toast.success("Order Created Sucessfully");
+      dispatch(reset());
     }
-  }, [isError, isLoading, isSuccess]);
+  }, [isError, isLoading, isSuccess, createdOrder, dispatch]);
 
   const styles = {
-    height: "40",
-    width: "40",
+    height: "80",
+    width: "80",
   };
 
   //State for getting form Data
@@ -52,6 +54,11 @@ export const AddNewOrders = () => {
   const handleFromData = (e) => {
     e.preventDefault();
     dispatch(CreateOrders(formData));
+    setOrderNo(""),
+      setOrderId(""),
+      setTracking(""),
+      setCost(""),
+      setOrderDetails([]);
   };
 
   const [orderNo, setOrderNo] = useState("");
@@ -207,7 +214,7 @@ export const AddNewOrders = () => {
             </div>
           </form>
         </div>
-        <div className="w-1/2 p-6 border h-fit rounded-md  ">
+        <div className="w-1/2 p-6 flex items-center flex-col border h-fit rounded-md  ">
           <p className="text-3xl text-center">{orderNo}</p>
           <button
             onClick={handleTracking}
@@ -244,9 +251,9 @@ export const AddNewOrders = () => {
               >
                 Add Child Tracking Number
               </button>
-              {isLoading && <Spinner styles={styles} />}
             </form>
           )}
+          {isLoading && <Spinner styles={styles} />}
         </div>
       </section>
     </>

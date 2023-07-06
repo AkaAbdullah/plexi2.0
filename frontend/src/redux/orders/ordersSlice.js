@@ -18,7 +18,6 @@ export const getAllOrders = createAsyncThunk(
         "http://localhost:5000/api/orders",
         config
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -42,15 +41,16 @@ export const CreateOrders = createAsyncThunk(
         formData,
         config
       );
-      console.log(response.data);
+      return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   }
 );
 
 const initialState = {
-  orders: null,
+  orders: [],
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -60,8 +60,18 @@ const initialState = {
 export const ordersSlice = createSlice({
   name: "orders",
   initialState,
+  reducers: {
+    reset: (state) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.message = "";
+      state.isSuccess = false;
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
+      //Get ORDERS CASES
       .addCase(getAllOrders.pending, (state) => {
         state.isLoading = true;
       })
@@ -93,5 +103,5 @@ export const ordersSlice = createSlice({
       });
   },
 });
-
+export const { reset } = ordersSlice.actions;
 export default ordersSlice.reducer;
