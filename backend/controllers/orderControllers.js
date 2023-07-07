@@ -77,9 +77,38 @@ const addOrderDetails = asyncHandler(async (req, res) => {
   }
 });
 
-//upate ORder
+//updaate ORder controller
+
 const updateOrder = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `update order ${req.params.id}` });
+  const id = req.params.id;
+  const { tracking, shippingCost } = req.body;
+  const updateFields = {};
+
+  if (req.body.tracking) {
+    updateFields.tracking = req.body.tracking;
+  }
+
+  if (req.body.shippingCost) {
+    updateFields.shippingCost = req.body.shippingCost;
+  }
+  try {
+    const updatedOrder = await ORDERS.findByIdAndUpdate(id, updateFields, {
+      new: true,
+    });
+    if (!updatedOrder) {
+      return res.status(404).json({ error: `Order ${id} not found` });
+    }
+
+    res.status(200).json({
+      message: `Order ${id} updated successfully`,
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while updating the order" });
+  }
 });
 
 //delete Order this function is with try catch block

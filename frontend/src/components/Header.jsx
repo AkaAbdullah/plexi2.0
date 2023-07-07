@@ -29,8 +29,6 @@ export const Header = () => {
             Plexiglass
           </Link>
           <div className="hidden md:flex gap-5 text-xl  font-bold  px-6">
-            <Link to="/">View Todays Orders</Link>
-            <Link to="/">Add new Orders</Link>
             {user ? (
               <button
                 className="bg-orange-600  hover:bg-blue-600 w-24 text-center   rounded-md"

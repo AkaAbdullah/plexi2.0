@@ -29,6 +29,7 @@ router.post("/generateorders", protect, createMultipleOrders);
 
 //Get single order
 router.get("/:orderNo", protect, getSingleOrder);
+
 //update single Order
 router.put("/:id", protect, updateOrder);
 

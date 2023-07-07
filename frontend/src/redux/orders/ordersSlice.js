@@ -71,7 +71,6 @@ export const CountOrders = createAsyncThunk(
   }
 );
 
-//get single order
 // Get single order by order number
 export const getSingleOrder = createAsyncThunk(
   "orders/getSingleOrder",
@@ -97,6 +96,31 @@ export const getSingleOrder = createAsyncThunk(
   }
 );
 
+//Update Single Order POST request
+export const updateOrder = createAsyncThunk(
+  "orders/update",
+  async (updateFormData, thunkAPI) => {
+    try {
+      const { id, tracking, shippingCost } = updateFormData;
+      const token = thunkAPI.getState().auth.user.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.put(
+        `http://localhost:5000/api/orders/${id}`,
+        { tracking, shippingCost },
+        config
+      );
+      return console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
 const initialState = {
   orders: [],
   isLoading: false,
@@ -105,6 +129,8 @@ const initialState = {
   createdOrder: {},
   OrderCount: "",
   singleOrder: {},
+  updatedOrder: {},
+  orderNotFound: false,
 };
 
 export const ordersSlice = createSlice({
@@ -172,8 +198,26 @@ export const ordersSlice = createSlice({
         state.singleOrder = action.payload;
       })
       .addCase(getSingleOrder.rejected, (state) => {
+        state.isLoading = false;
         state.isError = true;
         state.isLoading = false;
+        state.orderNotFound = true;
+      })
+      //Update single order add cases
+      .addCase(updateOrder.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(updateOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedOrder = action.payload;
+      })
+      .addCase(updateOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
       });
   },
 });
