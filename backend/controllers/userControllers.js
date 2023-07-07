@@ -79,6 +79,7 @@ const loginUser = asyncHandler(async (req, res) => {
       userName: user.userName,
       email: user.email,
       token: generateToken(user._id),
+      roles: user.roles,
     });
   } else {
     res.status(400);
@@ -89,7 +90,7 @@ const loginUser = asyncHandler(async (req, res) => {
 //GENERATE JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "5d",
+    expiresIn: "90d",
   });
 };
 

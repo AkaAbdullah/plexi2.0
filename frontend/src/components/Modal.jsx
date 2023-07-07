@@ -24,6 +24,9 @@ export const Modal = ({ isOpen, closeModal, className, data }) => {
           <p className="text-xl font-bold mt-5">
             Market Place Order ID : {data.marketPlaceOrderId}
           </p>
+          <p className="text-xl font-bold mt-5">
+            Tracking no : {data.tracking}
+          </p>
           <p className="text-xl font-bold mt-5">Comments: </p>
 
           <button

@@ -7,6 +7,13 @@ import { Spinner } from "../components/Spinner";
 
 export const UpdateOrders = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const [roles, setRoles] = useState("");
+  useEffect(() => {
+    setRoles(user.roles[0]);
+    console.log(roles);
+  }, []);
+
   const {
     singleOrder,
     orderNotFound,
@@ -20,11 +27,11 @@ export const UpdateOrders = () => {
   const [orderNo, setOrderNo] = useState("");
 
   const handleSearch = async () => {
-    if (orderNo) {
+    if (roles === "superUser" && orderNo) {
       setUpdateDiv(true);
       dispatch(getSingleOrder(orderNo));
     } else {
-      toast.error("Please Enter a Order Number");
+      toast.error("not Authorized");
     }
   };
 
