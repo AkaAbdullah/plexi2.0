@@ -122,13 +122,13 @@ export const AllOrdersTable = () => {
       cell: (row) => (
         <>
           <button
-            className=" bg-orange-500 h-9 w-20 mr-3 hover:bg-blue-700 "
+            className=" bg-blue-700 h-9 w-20 mr-3 hover:bg-blue-800 "
             onClick={() => handleViewClick(row)}
           >
             View
           </button>
           <button
-            className="bg-orange-500 h-9 w-28 hover:bg-blue-700  "
+            className="bg-blue-700 h-9 w-28 hover:bg-blue-800  "
             onClick={() => console.log("loru")}
           >
             Complete
@@ -207,7 +207,7 @@ export const AllOrdersTable = () => {
         ></input>
         <div>
           <input
-            className="text-white rounded-md bg-orange-500  ml-5 h-10 text-xl  "
+            className="text-white rounded-md bg-blue-700  ml-5 h-10 text-xl  "
             type="date"
             onChange={(e) => {
               const selectedDate = new Date(e.target.value);
@@ -223,7 +223,7 @@ export const AllOrdersTable = () => {
           />
           <button
             onClick={handleDateSearch}
-            className="bg-orange-500 w-32 h-10 ml-5 hover:bg-blue-600"
+            className="bg-blue-700 w-32 h-10 ml-5 hover:bg-blue-800"
           >
             Search
           </button>

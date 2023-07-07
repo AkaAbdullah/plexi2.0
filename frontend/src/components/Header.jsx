@@ -23,15 +23,18 @@ export const Header = () => {
 
   return (
     <>
-      <header className=" top-0 z-10 drop-shadow-xl   dark:bg-darkSecondary bg-lightSecondary text-white sticky">
+      <header className=" top-0 z-10 drop-shadow-xl   bg-darkSecondary  text-white sticky">
         <section className="mx-auto max-w-6xl p-4 flex justify-between items-center ">
           <Link className="text-3xl font-extrabold sm:text-4xl" to="/">
             Plexiglass
           </Link>
           <div className="hidden md:flex gap-5 text-xl  font-bold  px-6">
+            <p className="text-blue-500 text-base underline">
+              Logged in as : {user ? <> {user.userName}</> : ""}
+            </p>
             {user ? (
               <button
-                className="bg-orange-600  hover:bg-blue-600 w-24 text-center   rounded-md"
+                className="bg-blue-700  hover:bg-blue-800 w-24 text-center   rounded-md"
                 onClick={handleLogout}
                 to="/login"
               >
@@ -39,15 +42,12 @@ export const Header = () => {
               </button>
             ) : (
               <Link
-                className="bg-orange-600  hover:bg-blue-600 w-24 text-center   rounded-md"
+                className="bg-blue-700  hover:bg-blue-800 w-24 text-center   rounded-md"
                 to="/login"
               >
                 Login
               </Link>
             )}
-            <p className="text-orange-400 text-base underline">
-              Logged in as : {user ? <> {user.userName}</> : ""}
-            </p>
           </div>
           <div onClick={handleNav} className="md:hidden text-4xl">
             {!nav ? <span>☰</span> : <span>&#120;</span>}
@@ -57,7 +57,7 @@ export const Header = () => {
           className={
             !nav
               ? "hidden"
-              : "absolute md:hidden h-screen  flex flex-col justify-center text-center mx-auto text-4xl gap-10   w-full dark:bg-darkSecondary   bg-lightSecondary text-white"
+              : "absolute md:hidden h-screen  flex flex-col justify-center text-center mx-auto text-4xl gap-10   w-full bg-darkSecondary    text-white"
           }
         >
           <Link to="/">View Todays Orders</Link>
