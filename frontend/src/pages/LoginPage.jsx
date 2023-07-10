@@ -61,12 +61,12 @@ export const LoginPage = () => {
       <Toaster position="top-right" reverseOrder={false} />
 
       <section className=" text-white mx-auto h-screen max-w-6xl  container flex flex-col justify-center items-center drop-shadow-xl  ">
-        <div className="dark:bg-darkSecondary mt-[-150px] bg-lightSecondary w-96 text-white flex flex-col items-center gap-10">
+        <div className="bg-darkSecondary mt-[-150px]  w-3/6 h-3/6 text-white flex flex-col items-center gap-10">
           <p className="text-6xl mt-11">Login</p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <label className="text-xl">UserName</label>
             <input
-              className=" bg-darkPrimary h-9 border-solid rounded-sm"
+              className=" bg-darkPrimary h-9 w-80 border-solid rounded-sm"
               type="text"
               placeholder="User Name"
               autoFocus
@@ -83,7 +83,7 @@ export const LoginPage = () => {
             />
             <button
               type="submit"
-              className=" mb-11 bg-lightSecondary h-9 text-xl  hover:bg-stone-500"
+              className=" mb-11 bg-blue-700 h-12 text-xl  hover:bg-stone-500"
             >
               Login
             </button>

@@ -50,7 +50,11 @@ export const Header = () => {
             )}
           </div>
           <div onClick={handleNav} className="md:hidden text-4xl">
-            {!nav ? <span>☰</span> : <span>&#120;</span>}
+            {!nav ? (
+              <span className="cursor-[pointer] ">☰</span>
+            ) : (
+              <span className="cursor-[pointer] ">&#120;</span>
+            )}
           </div>
         </section>
         <div
@@ -62,8 +66,8 @@ export const Header = () => {
         >
           <Link to="/">View Todays Orders</Link>
           <Link to="/">Add new Orders</Link>
-          <Link to="/">Login</Link>
-          <Link to="/">Logout</Link>
+
+          {user ? <Link to="/">Logout</Link> : <Link to="/">Login</Link>}
         </div>
       </header>
     </>

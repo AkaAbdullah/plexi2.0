@@ -81,10 +81,10 @@ export const UpdateOrders = () => {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      <section className="mx-auto py-6 max-w-6xl z-10 p-4  h-screen text-white">
+      <section className="mx-auto py-6 max-w-6xl z-10 p-4  h-screen sm:justify-center   text-white">
         <p className="text-3xl text-center mt-5">Update Order</p>
-        <div className="flex gap-10">
-          <div className="flex items-center flex-col w-1/2 p-6 border h-fit rounded-md mt-10   ">
+        <div className="flex gap-10 sm:flex sm:flex-col  sm:items-center lg:flex-row ">
+          <div className="flex items-center flex-col lg:w-1/2 p-6 border h-fit rounded-md mt-10   ">
             {updateDiv && !singleOrder && isError && <p>Order not Found</p>}
             <label className="text-2xl">Enter Order Number</label>
             <input
@@ -103,7 +103,7 @@ export const UpdateOrders = () => {
             </button>
           </div>
           {updateDiv && singleOrder && (
-            <div className="flex items-center flex-col w-1/2 p-6 border h-fit rounded-md mt-10   ">
+            <div className="flex items-center flex-col lg:w-1/2 p-6 border h-fit rounded-md mt-10   ">
               <p className="text-2xl">Update Order : {singleOrder.orderNo}</p>
               <form
                 onSubmit={handleUpdateOrder}

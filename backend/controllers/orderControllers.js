@@ -189,6 +189,31 @@ const getSingleOrder = asyncHandler(async (req, res) => {
   }
 });
 
+//Compelete mark orders
+
+// Controller to mark an order as complete
+const markOrderComplete = async (req, res) => {
+  const orderId = req.params.id; // Get the order ID from the request parameters
+
+  try {
+    // Find the order by ID and update the completeMarked property
+    const order = await ORDERS.findByIdAndUpdate(
+      orderId,
+      { completeMarked: true },
+      { new: true }
+    );
+    console.log("Updated order:", order);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.status(200).json({ message: "Order marked as complete", order });
+  } catch (error) {
+    res.status(500).json({ message: "Error marking order as complete", error });
+  }
+};
+
 module.exports = {
   getOrders,
   createOrder,
@@ -198,4 +223,5 @@ module.exports = {
   createMultipleOrders,
   countDocuments,
   getSingleOrder,
+  markOrderComplete,
 };

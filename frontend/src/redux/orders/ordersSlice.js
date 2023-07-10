@@ -121,6 +121,30 @@ export const updateOrder = createAsyncThunk(
   }
 );
 
+//update Order Compelte mark put request
+export const CompleteMArkOrder = createAsyncThunk(
+  "orders/completemark",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.put(
+        `http://localhost:5000/api/orders/completemark/${id}`,
+        { completeMarked: true },
+        config
+      );
+      return console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
 const initialState = {
   orders: [],
   isLoading: false,
@@ -131,6 +155,9 @@ const initialState = {
   singleOrder: {},
   updatedOrder: {},
   orderNotFound: false,
+  completeMarkLoading: false,
+  completeMarkError: false,
+  completeMarkStatus: false,
 };
 
 export const ordersSlice = createSlice({
@@ -143,6 +170,7 @@ export const ordersSlice = createSlice({
       state.message = "";
       state.isSuccess = false;
       state.user = null;
+      state.completeMarkStatus = false;
     },
   },
   extraReducers: (builder) => {
@@ -218,6 +246,19 @@ export const ordersSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
+      })
+      //complete mark add cases
+      .addCase(CompleteMArkOrder.pending, (state) => {
+        state.completeMarkLoading = true;
+      })
+      .addCase(CompleteMArkOrder.fulfilled, (state, action) => {
+        state.completeMarkLoading = false;
+        state.completeMarkStatus = true;
+      })
+      .addCase(CompleteMArkOrder.rejected, (state, action) => {
+        state.completeMarkLoading = false;
+        state.completeMarkStatus = false;
+        state.completeMarkError = true;
       });
   },
 });

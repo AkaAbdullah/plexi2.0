@@ -91,8 +91,8 @@ export const AddNewOrders = () => {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      <section className="container mx-auto  py-6 text-white z-10 gap-5 p-4 max-w-6xl h-full flex ">
-        <div className="w-1/2 p-6 border h-fit rounded-md">
+      <section className="container mx-auto sm:flex sm:flex-col lg:flex-row   py-6 text-white z-10 gap-5 p-4 max-w-6xl  lg:h-fit sm:h-fit  ">
+        <div className="lg:w-1/2 p-6 border  h-fit rounded-md">
           <form className="flex flex-col gap-3">
             <label className="text-2xl">
               Order Number <span className="text-sm">(Required)</span>
@@ -212,7 +212,7 @@ export const AddNewOrders = () => {
             </div>
           </form>
         </div>
-        <div className="w-1/2 p-6 flex items-center flex-col border h-fit rounded-md  ">
+        <div className="lg:w-1/2 p-6 flex items-center flex-col border h-fit rounded-md  ">
           <p className="text-3xl text-center">{orderNo}</p>
           <button
             onClick={handleTracking}

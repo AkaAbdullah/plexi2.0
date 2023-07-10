@@ -8,6 +8,7 @@ const {
   createMultipleOrders,
   countDocuments,
   getSingleOrder,
+  markOrderComplete,
 } = require("../controllers/orderControllers");
 
 const { protect } = require("../middlewares/authMiddleware");
@@ -34,5 +35,7 @@ router.get("/:orderNo", protect, getSingleOrder);
 router.put("/:id", protect, updateOrder);
 
 router.delete("/:id", protect, deleteOrder);
+//complete mark order route
+router.put("/completemark/:id", protect, markOrderComplete);
 
 module.exports = router;
