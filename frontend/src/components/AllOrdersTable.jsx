@@ -81,7 +81,8 @@ export const AllOrdersTable = () => {
 
   const completeMark = (id) => {
     dispatch(CompleteMArkOrder(id));
-    window.location.reload(false);
+    dispatch(getAllOrders());
+    toast.success("Order Complete Marked Successfully");
   };
 
   const columns = [
@@ -351,7 +352,7 @@ export const AllOrdersTable = () => {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="bg-darkSecondary drop-shadow-xl border border-white text-white flex items-center h-16 p-4 ">
+      <div className="bg-darkSecondary drop-shadow-xl border sm:flex-col sm:h-fit sm:gap-5 border-white text-white lg:flex lg:flex-row items-center lg:h-16 p-4 ">
         <input
           type="text"
           className="bg-transparent h-9 border border-gray-300  rounded-sm"
@@ -359,7 +360,7 @@ export const AllOrdersTable = () => {
           autoFocus
           onChange={handleSearch}
         ></input>
-        <div className="sm:flex s:flex-row">
+        <div className="flex   sm:flex-row">
           <input
             className="text-white rounded-sm bg-blue-700  ml-5 h-10 text-xl  "
             type="date"

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserFunction, reset } from "../redux/users/authSlice";
+import { BiUserCircle } from "react-icons/bi";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -23,23 +24,29 @@ export const Header = () => {
 
   return (
     <>
-      <header className=" top-0 z-10 drop-shadow-xl   bg-darkSecondary  text-white sticky">
+      <header className=" top-0 z-10 drop-shadow-xl   bg-darkPrimary  text-white sticky">
         <section className="mx-auto max-w-6xl p-4 flex justify-between items-center ">
           <Link className="text-3xl font-extrabold sm:text-4xl" to="/">
-            Plexiglass
+            PlexigLᗋss
           </Link>
-          <div className="hidden md:flex gap-5 text-xl  font-bold  px-6">
-            <p className="text-blue-500 text-base underline">
+          <div className="hidden md:flex gap-5 text-xl  font-bold  items-center px-6">
+            <p className=" text-base underline">
               Logged in as : {user ? <> {user.userName}</> : ""}
             </p>
+
             {user ? (
-              <button
-                className="bg-blue-700  hover:bg-blue-800 w-24 text-center   rounded-md"
-                onClick={handleLogout}
-                to="/login"
-              >
-                Logout
-              </button>
+              <>
+                <button
+                  className="bg-red-600  hover:bg-red-500 w-40 h-9  text-center   rounded-md"
+                  onClick={handleLogout}
+                  to="/login"
+                >
+                  Logout 🥺
+                </button>
+                <Link className="text-4xl" to="/dashboard">
+                  <BiUserCircle className="w-24 h-12" />
+                </Link>
+              </>
             ) : (
               <Link
                 className="bg-blue-700  hover:bg-blue-800 w-24 text-center   rounded-md"

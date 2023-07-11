@@ -21,6 +21,58 @@ export const loginUserFunction = createAsyncThunk(
   }
 );
 
+//udating  user password  put REQUEST
+export const updatePassword = createAsyncThunk(
+  "auth/getme",
+  async (data, thunkAPI) => {
+    try {
+      const { id, password } = data;
+      const token = thunkAPI.getState().auth.user.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.put(
+        `http://localhost:5000/api/users/${id}`,
+        { password },
+        config
+      );
+      console.log(password);
+      console.log("sliceid", id);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+//Creating a new User POST request
+export const createUser = createAsyncThunk(
+  "auth/create",
+  async (data, thunkAPI) => {
+    const { userName, email, password, roles } = data;
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.post(
+        "http://localhost:5000/api/users",
+        data,
+        config
+      );
+      console.log(data);
+      return console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
 //logout function
 export const logoutUserFunction = createAsyncThunk("auth/logout", async () => {
   await localStorage.removeItem("user");
@@ -34,6 +86,8 @@ const initialState = {
   isLoading: false,
   isSuccess: false,
   message: "",
+  error: "",
+  createdUser: null,
 };
 
 export const authSlice = createSlice({
@@ -65,6 +119,27 @@ export const authSlice = createSlice({
       })
       .addCase(logoutUserFunction.fulfilled, (state) => {
         state.user = null;
+      })
+      .addCase(createUser.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.message = "User created successfully";
+        // Save the response in state
+        state.createdUser = action.payload;
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = "Failed to create user";
+        // Save the error in state
+        state.error = action.error.message;
       });
   },
 });

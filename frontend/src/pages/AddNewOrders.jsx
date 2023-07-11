@@ -59,6 +59,7 @@ export const AddNewOrders = () => {
       setTracking(""),
       setCost(""),
       setOrderDetails([]);
+    window.location.reload(false);
   };
 
   const [orderNo, setOrderNo] = useState("");

@@ -18,8 +18,8 @@ export const LoginPage = () => {
     }
 
     if (isSuccess || user) {
-      toast.success("Logged in Successfully");
       navigate("/");
+      window.location.reload(false);
     }
   }, [isError, user, navigate, isSuccess, message, dispatch]);
 
@@ -64,18 +64,20 @@ export const LoginPage = () => {
         <div className="bg-darkSecondary mt-[-150px]  w-3/6 h-3/6 text-white flex flex-col items-center gap-10">
           <p className="text-6xl mt-11">Login</p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <label className="text-xl">UserName</label>
+            <label className="text-2xl">
+              UserName <span className="text-xl">(case sensitive)</span>
+            </label>
             <input
-              className=" bg-darkPrimary h-9 w-80 border-solid rounded-sm"
+              className=" bg-darkPrimary h-12 w-80 border-solid text-2xl rounded-sm"
               type="text"
               placeholder="User Name"
               autoFocus
               name="userName"
               onChange={handleChange}
             />
-            <label className="text-xl">Password</label>
+            <label className="text-2xl">Password</label>
             <input
-              className=" bg-darkPrimary h-9 border-0   rounded-sm"
+              className=" bg-darkPrimary h-12 text-2xl border-0   rounded-sm"
               type="password"
               placeholder="Password"
               onChange={handleChange}

@@ -12,14 +12,22 @@ export const HomePage = () => {
   const { isLoading, OrderCount, isError } = useSelector(
     (state) => state.orders
   );
-  //checking if the user roles in admin or sueper user
+
+  //checking if the user is loggedin or not
   const { user } = useSelector((state) => state.auth);
 
   const [roles, setRoles] = useState("");
+
   useEffect(() => {
-    setRoles(user.roles[0]);
-    console.log(roles);
-  }, [OrderCount]);
+    if (user) {
+      dispatch(CountOrders());
+      setRoles(user.roles[0]);
+    } else {
+      navigate("/login");
+    }
+  }, []);
+
+  //checking if the user roles in admin or sueper user
 
   const checkRoles = () => {
     if (roles === "superUser") {
@@ -43,10 +51,6 @@ export const HomePage = () => {
     width: "40",
   };
 
-  useEffect(() => {
-    dispatch(CountOrders());
-    console.log(OrderCount);
-  }, []);
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
@@ -74,7 +78,7 @@ export const HomePage = () => {
                 ) : OrderCount ? (
                   OrderCount.count
                 ) : (
-                  <span>╳</span>
+                  <span>⚠️</span>
                 )}
               </p>
             )}

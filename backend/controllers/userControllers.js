@@ -21,10 +21,23 @@ const getUsers = asyncHandler(async (req, res) => {
   }
 });
 
-//Getting a Single user detail by the user Itself
+//updating user password put request
 const getMe = asyncHandler(async (req, res) => {
-  const { _id, userName, email } = await USERS.findById(req.user.id);
-  res.status(200).json({ id: _id, userName, email });
+  const { id } = req.params;
+  const { password } = req.body;
+  try {
+    console.log(id, password);
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // Update the password in the database for the specified user ID
+    await USERS.findByIdAndUpdate(id, { password: hashedPassword });
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, error: "Password update failed" });
+  }
 });
 
 //Creating a USER POST REQUEST

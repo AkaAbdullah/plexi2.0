@@ -11,9 +11,11 @@ const { protect } = require("../middlewares/authMiddleware");
 
 router.get("/editusers", protect, getUsers);
 
+//creating a new user
 router.post("/", registerUser);
 
-router.get("/:id", protect, getMe);
+//update password route
+router.put("/:id", protect, getMe);
 
 router.post("/login", loginUser);
 

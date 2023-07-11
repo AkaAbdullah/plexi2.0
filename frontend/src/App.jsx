@@ -8,6 +8,8 @@ import { ViewAllOrders } from "./pages/ViewAllOrders";
 import { GenrateOrders } from "./pages/GenrateOrders";
 import { AddNewOrders } from "./pages/AddNewOrders";
 import { UpdateOrders } from "./pages/UpdateOrders";
+import { ProtectedRoutes } from "./components/ProtectedRoutes";
+import { UserProfile } from "./pages/UserProfile";
 function App() {
   return (
     <>
@@ -15,13 +17,32 @@ function App() {
         <Header />
 
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<ProtectedRoutes Component={HomePage} />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/genrateorders" element={<GenrateOrders />} />
-          <Route path="/allorders" element={<ViewAllOrders />} />
-          <Route path="/addnew" element={<AddNewOrders />} />
-          <Route path="/update" element={<UpdateOrders />} />
+          <Route
+            path="/admin"
+            element={<ProtectedRoutes Component={AdminPage} />}
+          />
+          <Route
+            path="/genrateorders"
+            element={<ProtectedRoutes Component={GenrateOrders} />}
+          />
+          <Route
+            path="/allorders"
+            element={<ProtectedRoutes Component={ViewAllOrders} />}
+          />
+          <Route
+            path="/addnew"
+            element={<ProtectedRoutes Component={AddNewOrders} />}
+          />
+          <Route
+            path="/update"
+            element={<ProtectedRoutes Component={UpdateOrders} />}
+          />
+          <Route
+            path="/dashboard"
+            element={<ProtectedRoutes Component={UserProfile} />}
+          />
         </Routes>
         <Footer />
       </BrowserRouter>
