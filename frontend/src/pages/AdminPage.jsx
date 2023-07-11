@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createUser } from "../redux/users/authSlice";
+import { createUser, reset2 } from "../redux/users/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { Spinner } from "../components/Spinner";
@@ -15,7 +15,9 @@ export const AdminPage = () => {
     }
     if (isSuccess) {
       toast.success("User created Successfully");
+      console.log(createdUser);
     }
+    dispatch(reset2());
   }, [error, createdUser, isLoading, message, isError, dispatch, isSuccess]);
 
   const [viewForm, setViewForm] = useState(false);
@@ -121,6 +123,7 @@ export const AdminPage = () => {
             >
               Create User
             </button>
+
             {isLoading && <Spinner styles={styles} />}
             {isError && <p className="text-center">{error}</p>}
           </form>
