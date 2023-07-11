@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "../redux/orders/ordersSlice";
 import { getAllOrders } from "../redux/orders/ordersSlice";
+
 export const Modal = ({ isOpen, closeModal, className, data }) => {
   if (!isOpen) {
     return null;
@@ -26,12 +27,12 @@ export const Modal = ({ isOpen, closeModal, className, data }) => {
 
   const handleUpdateInput = (e) => {
     const { name, value } = e.target;
+    const trimmedValue = value.replace(/\s+/g, ""); // Remove all spaces
     setUpdateFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: trimmedValue,
     }));
   };
-
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center z-50">

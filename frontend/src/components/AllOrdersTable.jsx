@@ -19,7 +19,6 @@ export const AllOrdersTable = () => {
     isLoading,
     isError,
     completeMarkLoading,
-    completeMarkError,
     completeMarkStatus,
   } = useSelector((state) => state.orders);
 
