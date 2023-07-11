@@ -15,7 +15,7 @@ export const getAllOrders = createAsyncThunk(
         },
       };
       const response = await axios.get(
-        "http://localhost:5000/api/orders",
+        "https://easy-tan-dove-yoke.cyclic.app/api/orders",
         config
       );
       return response.data;
@@ -37,7 +37,7 @@ export const CreateOrders = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/orders",
+        "https://easy-tan-dove-yoke.cyclic.app/api/orders",
         formData,
         config
       );
@@ -61,7 +61,7 @@ export const CountOrders = createAsyncThunk(
         },
       };
       const response = await axios.get(
-        "http://localhost:5000/api/orders/count",
+        "https://easy-tan-dove-yoke.cyclic.app/api/orders/count",
         config
       );
       return response.data;
@@ -85,7 +85,7 @@ export const getSingleOrder = createAsyncThunk(
       };
 
       const response = await axios.get(
-        `http://localhost:5000/api/orders/${orderNo}`,
+        `https://easy-tan-dove-yoke.cyclic.app/api/orders/${orderNo}`,
         config
       );
 
@@ -109,7 +109,7 @@ export const updateOrder = createAsyncThunk(
         },
       };
       const response = await axios.put(
-        `http://localhost:5000/api/orders/${id}`,
+        `https://easy-tan-dove-yoke.cyclic.app/api/orders/${id}`,
         { tracking, shippingCost },
         config
       );
@@ -133,7 +133,7 @@ export const CompleteMArkOrder = createAsyncThunk(
         },
       };
       const response = await axios.put(
-        `http://localhost:5000/api/orders/completemark/${id}`,
+        `https://easy-tan-dove-yoke.cyclic.app/api/orders/completemark/${id}`,
         { completeMarked: true },
         config
       );

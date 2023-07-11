@@ -7,7 +7,7 @@ export const loginUserFunction = createAsyncThunk(
   async (userLoginData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        "https://easy-tan-dove-yoke.cyclic.app/api/users/login",
         userLoginData
       );
       if (response.data) {
@@ -34,7 +34,7 @@ export const updatePassword = createAsyncThunk(
         },
       };
       const response = await axios.put(
-        `http://localhost:5000/api/users/${id}`,
+        `https://easy-tan-dove-yoke.cyclic.app/api/users/${id}`,
         { password },
         config
       );
@@ -60,7 +60,7 @@ export const createUser = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/users",
+        "https://easy-tan-dove-yoke.cyclic.app/api/users",
         data,
         config
       );
