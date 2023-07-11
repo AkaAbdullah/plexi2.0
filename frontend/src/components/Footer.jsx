@@ -1,6 +1,7 @@
 import { FaGithub } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { HiOutlineDocumentText } from "react-icons/hi";
+import incompleteDocumentation from "../assets/incomplete documentation.pdf";
 
 export const Footer = () => {
   return (
@@ -17,13 +18,14 @@ export const Footer = () => {
             >
               <FaGithub className="w-24 h-12" />
             </Link>
-            <Link
+            <a
               className="flex items-center text-2xl"
-              to="https://github.com/AkaAbdullah/plexi2.0"
-              title="Documentation"
+              href={incompleteDocumentation}
+              download="incomplete_documentation.pdf"
+              title="Download PDF"
             >
               <HiOutlineDocumentText className="w-24 h-12" />
-            </Link>
+            </a>
           </div>
         </section>
       </footer>

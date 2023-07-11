@@ -61,7 +61,7 @@ export const LoginPage = () => {
       <Toaster position="top-right" reverseOrder={false} />
 
       <section className=" text-white mx-auto h-screen max-w-6xl  container flex flex-col justify-center items-center drop-shadow-xl  ">
-        <div className="bg-darkSecondary mt-[-150px]  w-3/6 h-3/6 text-white flex flex-col items-center gap-10">
+        <div className="bg-darkSecondary mt-[-150px]  w-3/6 h-fit text-white flex flex-col items-center gap-10">
           <p className="text-6xl mt-11">Login</p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <label className="text-2xl">
@@ -77,7 +77,7 @@ export const LoginPage = () => {
             />
             <label className="text-2xl">Password</label>
             <input
-              className=" bg-darkPrimary h-12 text-2xl border-0   rounded-sm"
+              className=" bg-darkPrimary h-12 w-80 text-2xl border-0   rounded-sm"
               type="password"
               placeholder="Password"
               onChange={handleChange}
