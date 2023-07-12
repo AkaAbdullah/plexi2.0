@@ -317,7 +317,7 @@ export const AllOrdersTable = () => {
     doc.line(10, tableEndY, doc.internal.pageSize.getWidth() - 10, tableEndY); // Draw the line
 
     // Add text below the line
-    const additionalText = "http://localhost:5000/api/orders/";
+    const additionalText = "https://fabplexiv-2.netlify.app/";
     const additionalTextY = tableEndY + lineThickness + 3; // Adjust the vertical position as needed
     doc.setFontSize(9); // Set font size for the text
     doc.text(additionalText, 10, additionalTextY); // Draw the text

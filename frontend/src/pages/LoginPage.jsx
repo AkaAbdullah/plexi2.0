@@ -19,7 +19,6 @@ export const LoginPage = () => {
 
     if (isSuccess || user) {
       navigate("/");
-      window.location.reload(false);
     }
   }, [isError, user, navigate, isSuccess, message, dispatch]);
 
