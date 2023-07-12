@@ -1,6 +1,31 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//Getting all users GET request
+
+export const getAllUsers = createAsyncThunk(
+  "auth/getAllUsers",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const response = await axios.get(
+        "http://localhost:5000/api/users",
+        config
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
 //creating User Login Action here
 export const loginUserFunction = createAsyncThunk(
   "auth/login",
@@ -88,6 +113,7 @@ const initialState = {
   message: "",
   error: "",
   createdUser: null,
+  allUsers: [],
 };
 
 export const authSlice = createSlice({
@@ -146,6 +172,18 @@ export const authSlice = createSlice({
         state.message = "Failed to create user";
         // Save the error in state
         state.error = action.error.message;
+      })
+      //add cased for getting all users get request
+      .addCase(getAllUsers.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.allUsers = action.payload;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
       });
   },
 });

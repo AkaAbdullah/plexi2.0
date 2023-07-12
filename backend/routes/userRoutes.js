@@ -5,9 +5,14 @@ const {
   getUsers,
   loginUser,
   getMe,
+  getAllUsers,
 } = require("../controllers/userControllers");
 
 const { protect } = require("../middlewares/authMiddleware");
+
+//getting all users get rout
+
+router.get("/", protect, getAllUsers);
 
 router.get("/editusers", protect, getUsers);
 

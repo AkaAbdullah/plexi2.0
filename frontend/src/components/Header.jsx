@@ -71,10 +71,20 @@ export const Header = () => {
               : "absolute md:hidden h-screen  flex flex-col justify-center text-center mx-auto text-4xl gap-10   w-full bg-darkSecondary    text-white"
           }
         >
-          <Link to="/">View Todays Orders</Link>
-          <Link to="/">Add new Orders</Link>
+          <Link onClick={handleNav} to="/allorders">
+            View All Orders
+          </Link>
+          <Link onClick={handleNav} to="/addnew">
+            Add new Orders
+          </Link>
 
-          {user ? <Link to="/">Logout</Link> : <Link to="/">Login</Link>}
+          {user ? (
+            <Link onClick={handleLogout} to="/login">
+              Logout
+            </Link>
+          ) : (
+            <Link to="/">Login</Link>
+          )}
         </div>
       </header>
     </>

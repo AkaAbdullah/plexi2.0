@@ -400,6 +400,7 @@ export const AllOrdersTable = () => {
       ) : (
         <p>No orders found.</p>
       )}
+
       <Modal isOpen={isOpen} closeModal={closeModal} data={modelData} />
     </>
   );

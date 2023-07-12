@@ -1,13 +1,32 @@
 import { useEffect, useState } from "react";
-import { createUser, reset2 } from "../redux/users/authSlice";
+import { createUser, reset2, getAllUsers } from "../redux/users/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { Spinner } from "../components/Spinner";
 
 export const AdminPage = () => {
   const dispatch = useDispatch();
-  const { error, isLoading, createdUser, message, isError, isSuccess } =
-    useSelector((state) => state.auth);
+  const {
+    error,
+    isLoading,
+    createdUser,
+    message,
+    isError,
+    isSuccess,
+    allUsers,
+  } = useSelector((state) => state.auth);
+
+  //view users div
+  const [userDiv, setUserDiv] = useState(false);
+  const handleUserView = () => {
+    setViewForm(false);
+    setUserDiv(!userDiv);
+    console.log(allUsers);
+  };
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, []);
 
   useEffect(() => {
     if (isError) {
@@ -23,7 +42,7 @@ export const AdminPage = () => {
   const [viewForm, setViewForm] = useState(false);
   const handleViewForm = () => {
     setViewForm(!viewForm);
-    console.log(viewForm);
+    setUserDiv(false);
   };
 
   const [data, setData] = useState({
@@ -60,7 +79,7 @@ export const AdminPage = () => {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      <section className="container  mx-auto h-screen max-w-6xl p-4  z-10 m-8">
+      <section className="container  mx-auto lg:h-fit  max-w-6xl p-4  z-10 m-8">
         <div className="flex gap-10 justify-evenly">
           <button
             onClick={handleViewForm}
@@ -69,7 +88,10 @@ export const AdminPage = () => {
             <p className="text-2xl">Create New User</p>
           </button>
 
-          <button className=" hover:bg-orange-600 w-72 h-24  rounded-full flex items-center justify-center text-white bg-orange-700 ">
+          <button
+            onClick={handleUserView}
+            className=" hover:bg-orange-600 w-72 h-24  rounded-full flex items-center justify-center text-white bg-orange-700 "
+          >
             <p className="text-2xl">View All Users</p>
           </button>
         </div>
@@ -128,6 +150,26 @@ export const AdminPage = () => {
             {isError && <p className="text-center">{error}</p>}
           </form>
         </div>
+        {userDiv && (
+          <>
+            <div className="border p-4 mt-8 ">
+              <p className="text-3xl text-center text-white underline">
+                Users Details
+              </p>
+              <div className="text-white">
+                <p className="text-2xl text-right">
+                  Active Users : {allUsers.length}
+                </p>
+                {allUsers.map((user) => (
+                  <p className="text-3xl m-5 " key={user._id}>
+                    {user.userName} <br /> {user.email} <br /> {user._id} <br />
+                    Roles : {user.roles}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </section>
     </>
   );

@@ -3,6 +3,17 @@ const USERS = require("../modals/userModal");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+//Get All users GET request
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  try {
+    const users = await USERS.find(); // Assuming your user model is named "User"
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch users" });
+  }
+});
+
 //Editing  All Users to Super User page
 const getUsers = asyncHandler(async (req, res) => {
   //Check if a user is present to make a api call
@@ -112,4 +123,5 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  getAllUsers,
 };
