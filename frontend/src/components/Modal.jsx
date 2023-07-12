@@ -20,9 +20,17 @@ export const Modal = ({ isOpen, closeModal, className, data }) => {
   const handleUpdateOrder = (e) => {
     e.preventDefault();
     dispatch(updateOrder({ id: data._id, ...updateFormData }));
-    //dispatch this order to reflect changes in table
+    // Dispatch this order to reflect changes in table
     dispatch(getAllOrders());
     closeModal();
+
+    const updatedSearch = search.map((order) => {
+      if (order._id === data._id) {
+        return { ...order, ...updateFormData };
+      }
+      return order;
+    });
+    setSearch(updatedSearch);
   };
 
   const handleUpdateInput = (e) => {

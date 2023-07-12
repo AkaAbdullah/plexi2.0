@@ -70,19 +70,16 @@ export const AllOrdersTable = () => {
     openModal();
   };
 
-  //handle complete mark
-
-  useEffect(() => {
-    if (completeMarkStatus === true) {
-      toast.success("Order Complete Marked Successfully");
-      dispatch(getAllOrders());
-    }
-  }, [completeMarkStatus]);
-
   const completeMark = (id) => {
     dispatch(CompleteMArkOrder(id));
-    dispatch(getAllOrders());
     toast.success("Order Complete Marked Successfully");
+    const updatedOrders = orders.map((order) => {
+      if (order._id === id) {
+        return { ...order, completeMarked: true };
+      }
+      return order;
+    });
+    setSearch(updatedOrders);
   };
 
   const columns = [
@@ -110,7 +107,7 @@ export const AllOrdersTable = () => {
             <tbody>
               {row.orderDetails.map((detail, index) => (
                 <tr key={index} className="flex gap-10  ">
-                  <td className="flex-grow  w-28 h-12 ">{detail.thickness}</td>
+                  <td className="flex-grow  w-28 h-12">{detail.thickness}</td>
                   <td className="flex-grow w-28">{detail.length}</td>
                   <td className="flex-grow w-28 ">{detail.width}</td>
                   <td className="flex-grow w-28">{detail.diameter}</td>
@@ -396,6 +393,7 @@ export const AllOrdersTable = () => {
           columns={columns}
           data={search}
           pagination
+          paginationPerPage={30}
           customStyles={customStyles}
           theme="dark"
         />
