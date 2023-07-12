@@ -15,7 +15,7 @@ export const getAllUsers = createAsyncThunk(
       };
 
       const response = await axios.get(
-        "http://localhost:5000/api/users",
+        "https://easy-tan-dove-yoke.cyclic.app/api/users",
         config
       );
       return response.data;
