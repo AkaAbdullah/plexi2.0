@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "../redux/orders/ordersSlice";
 import { getAllOrders } from "../redux/orders/ordersSlice";
 
-export const Modal = ({ isOpen, closeModal, className, data }) => {
+export const Modal = ({
+  isOpen,
+  closeModal,
+  className,
+  data,
+  updateSearch,
+  search,
+}) => {
   if (!isOpen) {
     return null;
   }
@@ -21,7 +28,7 @@ export const Modal = ({ isOpen, closeModal, className, data }) => {
     e.preventDefault();
     dispatch(updateOrder({ id: data._id, ...updateFormData }));
     // Dispatch this order to reflect changes in table
-    dispatch(getAllOrders());
+    // dispatch(getAllOrders());
     closeModal();
 
     const updatedSearch = search.map((order) => {
@@ -30,7 +37,8 @@ export const Modal = ({ isOpen, closeModal, className, data }) => {
       }
       return order;
     });
-    setSearch(updatedSearch);
+    updateSearch(updatedSearch);
+    console.log(updatedSearch);
   };
 
   const handleUpdateInput = (e) => {

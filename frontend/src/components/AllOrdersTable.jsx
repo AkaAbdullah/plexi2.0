@@ -14,13 +14,7 @@ import { CompleteMArkOrder } from "../redux/orders/ordersSlice";
 export const AllOrdersTable = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const {
-    orders,
-    isLoading,
-    isError,
-    completeMarkLoading,
-    completeMarkStatus,
-  } = useSelector((state) => state.orders);
+  const { orders, isLoading, isError } = useSelector((state) => state.orders);
 
   const { user } = useSelector((state) => state.auth);
 
@@ -37,6 +31,11 @@ export const AllOrdersTable = () => {
 
   // Searching the order
   const [search, setSearch] = useState([]);
+
+  //pasing to modal
+  const updateSearch = (updatedSearch) => {
+    setSearch(updatedSearch);
+  };
 
   const handleSearch = (e) => {
     const result = orders.filter((row) => {
@@ -401,7 +400,13 @@ export const AllOrdersTable = () => {
         <p>No orders found.</p>
       )}
 
-      <Modal isOpen={isOpen} closeModal={closeModal} data={modelData} />
+      <Modal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        data={modelData}
+        updateSearch={updateSearch}
+        search={search}
+      />
     </>
   );
 };
