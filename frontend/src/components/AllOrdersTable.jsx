@@ -75,8 +75,9 @@ export const AllOrdersTable = () => {
   useEffect(() => {
     if (completeMarkStatus === true) {
       toast.success("Order Complete Marked Successfully");
+      dispatch(getAllOrders());
     }
-  }, [completeMarkLoading]);
+  }, [completeMarkStatus]);
 
   const completeMark = (id) => {
     dispatch(CompleteMArkOrder(id));
