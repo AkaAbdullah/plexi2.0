@@ -32,8 +32,8 @@ export const Header = () => {
   return (
     <>
       <header
-        className={`top-0 z-10 drop-shadow-xl  ${
-          darkMode ? "bg-[#403838]" : "bg-blue-700"
+        className={`top-0 z-10   ${
+          darkMode ? "bg-[#403838] drop-shadow-xl " : "bg-blue-700"
         }  text-white sticky`}
       >
         <section className="mx-auto max-w-6xl p-4 flex justify-between items-center ">

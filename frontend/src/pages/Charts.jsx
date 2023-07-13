@@ -11,30 +11,49 @@ export const Charts = () => {
   //Date state
   const [date, setDate] = useState("");
 
-  const [res, setRes] = useState({});
+  //data to perfrom claculations
+  const [res, setRes] = useState([]);
+
+  //data to map on chart
+  // const [finalData, setFinalData] = useState([]);
 
   const handleSearch = () => {
     const result = data.filter((item) => item.createdAt === date);
-    return setRes(result);
+    const filteredOrders = result.filter((order) => order.shippingCost !== "");
+
+    const convertedOrders = filteredOrders.map((order) => ({
+      ...order,
+      shippingCost: parseFloat(order.shippingCost),
+    }));
+    return setRes(convertedOrders);
+
+    // const finalFilteredOrders = filteredOrders.filter(
+    //   (order) => order.orderDetails.length > 2
+    // );
+    // setFinalData(finalFilteredOrders);
   };
 
-  const price = [
-    {
-      price: "10",
-    },
-    {
-      price: "20",
-    },
-    {
-      price: "30",
-    },
-    {
-      price: "50",
-    },
-    {
-      price: "100",
-    },
-  ];
+  const [filteredData, setFilteredData] = useState({
+    totalOrders: "",
+    averageShippingCost: "",
+  });
+
+  useEffect(() => {
+    const totalOrders = res.length;
+    const totalShippingCost = res.reduce(
+      (sum, order) => sum + parseFloat(order.shippingCost),
+      0
+    );
+    const averageShippingCost = (totalShippingCost / totalOrders || 0).toFixed(
+      3
+    );
+
+    setFilteredData((prevData) => ({
+      ...prevData,
+      totalOrders: res.length,
+      averageShippingCost,
+    }));
+  }, [res]);
 
   useEffect(() => {
     dispatch(getAllOrders())
@@ -52,12 +71,12 @@ export const Charts = () => {
   return (
     <>
       <section
-        className={`mx-auto py-6 z-10   container sm:h-fit  lg:h-screen max-w-6xl ${
+        className={`mx-auto py-6 z-10   container sm:h-fit   lg:h-fit max-w-6xl ${
           darkMode ? "text-white" : "text-black"
         } `}
       >
         <p className="text-2xl text-center font-bold ">Data Representation </p>
-        <div className=" h-24 flex justify-start shadow-2xl border rounded-2xl items-center">
+        <div className=" h-24 flex justify-start shadow-xl border rounded-2xl items-center">
           <input
             className="text-white rounded-sm bg-blue-700  ml-5 h-10 text-xl  "
             type="date"
@@ -80,19 +99,29 @@ export const Charts = () => {
             Search
           </button>
         </div>
-        <div className="mt-5">
+        <div className="mt-10 shadow-xl  rounded-2xl">
           <LineChart width={1000} height={500} data={res}>
-            <XAxis dataKey="createdAt" />
-            <YAxis />
+            <XAxis />
+            <YAxis dataKey="shippingCost" domain={[0, "auto"]} />
             <Tooltip />
             <Legend />
-            <Line
-              type="monotone"
-              dataKey="shippingCost"
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
-            />
+            <Line type="monotone" dataKey="shippingCost" stroke="#8884d8" />
+            <Line type="monotone" dataKey="orderNo" stroke="#82ca9d" />
           </LineChart>
+        </div>
+
+        <div className=" mt-10 p-4 shadow-xl  rounded-2xl">
+          <div className="flex justify-between">
+            <p className="text-2xl ">Date : {date}</p>
+
+            <p className="text-2xl  ">
+              Total Orders : {filteredData.totalOrders}
+            </p>
+          </div>
+          <hr></hr>
+          <p className="text-2xl  text-center font-bold">
+            Average Shipping Cost : {filteredData.averageShippingCost}
+          </p>
         </div>
       </section>
     </>
