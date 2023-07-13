@@ -71,7 +71,7 @@ export const Charts = () => {
   return (
     <>
       <section
-        className={`mx-auto py-6 z-10   container sm:h-fit   lg:h-fit max-w-6xl ${
+        className={`mx-auto py-6 z-10   container    lg:h-fit max-w-6xl ${
           darkMode ? "text-white" : "text-black"
         } `}
       >
@@ -99,14 +99,19 @@ export const Charts = () => {
             Search
           </button>
         </div>
-        <div className="mt-10 shadow-xl  rounded-2xl">
+        <div className="mt-10 shadow-xl  flex items-center justify-center rounded-2xl">
           <LineChart width={1000} height={500} data={res}>
             <XAxis />
             <YAxis dataKey="shippingCost" domain={[0, "auto"]} />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="shippingCost" stroke="#8884d8" />
             <Line type="monotone" dataKey="orderNo" stroke="#82ca9d" />
+            <Line
+              type="monotone"
+              dataKey="shippingCost"
+              activeDot={{ r: 8 }}
+              stroke="#8884d8"
+            />
           </LineChart>
         </div>
 
