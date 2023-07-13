@@ -2,11 +2,18 @@ import { FaGithub } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import incompleteDocumentation from "../assets/incomplete documentation.pdf";
+import { useSelector } from "react-redux";
 
 export const Footer = () => {
+  const { darkMode } = useSelector((state) => state.theme);
+
   return (
     <>
-      <footer className="    drop-shadow-xl bg-darkPrimary  z-10 text-white mx-auto">
+      <footer
+        className={`drop-shadow-xl ${
+          darkMode ? "bg-[#403838]" : "bg-blue-700"
+        }  z-10 text-white mx-auto`}
+      >
         <section className="flex items-center flex-col justify-center">
           <p className="text-3xl font-bold  m-8">not Fab Glass and Mirror</p>
           <p>Yo, we got the backend vibes rollin' at Cyclic!</p>

@@ -7,6 +7,8 @@ import { Spinner } from "../components/Spinner";
 
 export const UpdateOrders = () => {
   const dispatch = useDispatch();
+  const { darkMode } = useSelector((state) => state.theme);
+
   const { user } = useSelector((state) => state.auth);
   const [roles, setRoles] = useState("");
   useEffect(() => {
@@ -81,14 +83,26 @@ export const UpdateOrders = () => {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      <section className="mx-auto py-6 max-w-6xl z-10 p-4  h-screen sm:justify-center   text-white">
+      <section
+        className={`mx-auto py-6 max-w-6xl z-10 p-4  h-screen sm:justify-center ${
+          darkMode ? "text-white" : "text-black"
+        }  `}
+      >
         <p className="text-3xl text-center mt-5">Update Order</p>
         <div className="flex gap-10 sm:flex sm:flex-col  sm:items-center lg:flex-row ">
-          <div className="flex items-center flex-col lg:w-1/2 p-6 border h-fit rounded-md mt-10   ">
+          <div
+            className={`flex items-center flex-col lg:w-1/2 p-6 border h-fit rounded-2xl ${
+              darkMode ? "" : "border-black"
+            }  mt-10`}
+          >
             {updateDiv && !singleOrder && isError && <p>Order not Found</p>}
             <label className="text-2xl">Enter Order Number</label>
             <input
-              className="h-10 mt-5 bg-transparent focus:bg-white w-72 focus:text-black border rounded-md border-teal-100 text-2xl"
+              className={`h-10 mt-5 bg-transparent focus:bg-transparent  w-72  \ border rounded-md text-2xl ${
+                darkMode
+                  ? "border-white"
+                  : "border-black text-black focus:text-black"
+              } `}
               autoFocus
               required
               type="text"
@@ -103,7 +117,11 @@ export const UpdateOrders = () => {
             </button>
           </div>
           {updateDiv && singleOrder && (
-            <div className="flex items-center flex-col lg:w-1/2 p-6 border h-fit rounded-md mt-10   ">
+            <div
+              className={`flex items-center flex-col lg:w-1/2 p-6 border h-fit rounded-2xl mt-10 ${
+                darkMode ? "" : "border-black"
+              } `}
+            >
               <p className="text-2xl">Update Order : {singleOrder.orderNo}</p>
               <form
                 onSubmit={handleUpdateOrder}
@@ -111,7 +129,9 @@ export const UpdateOrders = () => {
               >
                 <label className="text-xl mt-5">Shipping cost</label>
                 <input
-                  className="h-10 mt-2 bg-transparent focus:bg-white w-72 focus:text-black border rounded-md border-teal-100 text-2xl"
+                  className={`h-10 mt-2 bg-transparent  w-72  rounded-md border text-2xl ${
+                    darkMode ? "border-white" : "border-black"
+                  } `}
                   autoFocus
                   required
                   type="text"
@@ -120,7 +140,9 @@ export const UpdateOrders = () => {
                 />
                 <label className="text-xl mt-2">Tracking Number</label>
                 <input
-                  className="h-10 mt-2 bg-transparent focus:bg-white w-72 focus:text-black border rounded-md border-teal-100 text-2xl"
+                  className={`h-10 mt-2 bg-transparent  w-72  rounded-md border text-2xl ${
+                    darkMode ? "border-white" : "border-black"
+                  } `}
                   autoFocus
                   required
                   type="text"

@@ -10,40 +10,47 @@ import { AddNewOrders } from "./pages/AddNewOrders";
 import { UpdateOrders } from "./pages/UpdateOrders";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { UserProfile } from "./pages/UserProfile";
+import { useSelector } from "react-redux";
+
 function App() {
+  const { darkMode } = useSelector((state) => state.theme);
   return (
     <>
       <BrowserRouter>
         <Header />
-
-        <Routes>
-          <Route path="/" element={<ProtectedRoutes Component={HomePage} />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/admin"
-            element={<ProtectedRoutes Component={AdminPage} />}
-          />
-          <Route
-            path="/genrateorders"
-            element={<ProtectedRoutes Component={GenrateOrders} />}
-          />
-          <Route
-            path="/allorders"
-            element={<ProtectedRoutes Component={ViewAllOrders} />}
-          />
-          <Route
-            path="/addnew"
-            element={<ProtectedRoutes Component={AddNewOrders} />}
-          />
-          <Route
-            path="/update"
-            element={<ProtectedRoutes Component={UpdateOrders} />}
-          />
-          <Route
-            path="/dashboard"
-            element={<ProtectedRoutes Component={UserProfile} />}
-          />
-        </Routes>
+        <div id="root" className={`${darkMode ? "dark-mode" : ""}`}>
+          <Routes>
+            <Route
+              path="/"
+              element={<ProtectedRoutes Component={HomePage} />}
+            />
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/admin"
+              element={<ProtectedRoutes Component={AdminPage} />}
+            />
+            <Route
+              path="/genrateorders"
+              element={<ProtectedRoutes Component={GenrateOrders} />}
+            />
+            <Route
+              path="/allorders"
+              element={<ProtectedRoutes Component={ViewAllOrders} />}
+            />
+            <Route
+              path="/addnew"
+              element={<ProtectedRoutes Component={AddNewOrders} />}
+            />
+            <Route
+              path="/update"
+              element={<ProtectedRoutes Component={UpdateOrders} />}
+            />
+            <Route
+              path="/dashboard"
+              element={<ProtectedRoutes Component={UserProfile} />}
+            />
+          </Routes>
+        </div>
         <Footer />
       </BrowserRouter>
     </>

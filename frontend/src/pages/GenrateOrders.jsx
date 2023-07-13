@@ -1,8 +1,9 @@
-import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const GenrateOrders = () => {
   const navigate = useNavigate();
+  const { darkMode } = useSelector((state) => state.theme);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,7 +16,9 @@ export const GenrateOrders = () => {
         <p className="bg-red-700">Please do not add custom cut Orders here</p>
         <div className="mt-10 flex flex-col items-center gap-7 ">
           <textarea
-            className="w-80  h-64 bg-transparent"
+            className={`w-80  h-64 bg-transparent border rounded-md ${
+              darkMode ? "" : "border-black"
+            } `}
             placeholder="5989938833&#10;5000978763&#10;5000083733"
             autoFocus
             onChange={(e) => setOrderNumbers(e.target.value)}

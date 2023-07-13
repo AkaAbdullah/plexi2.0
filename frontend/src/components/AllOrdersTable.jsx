@@ -15,6 +15,7 @@ export const AllOrdersTable = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const { orders, isLoading, isError } = useSelector((state) => state.orders);
+  const { darkMode } = useSelector((state) => state.theme);
 
   const { user } = useSelector((state) => state.auth);
 
@@ -184,7 +185,7 @@ export const AllOrdersTable = () => {
       style: {
         minHeight: "52px", // override the row height
         fontSize: "20px",
-        // backgroundColor: "#3f3f46",
+        backgroundColor: "#3f3f46",
         color: "white",
         "&:hover": {
           backgroundColor: "#71717a",
@@ -394,7 +395,7 @@ export const AllOrdersTable = () => {
           pagination
           paginationPerPage={30}
           customStyles={customStyles}
-          theme="dark"
+          theme={darkMode ? "dark" : "light"}
         />
       ) : (
         <p>No orders found.</p>

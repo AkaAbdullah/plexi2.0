@@ -9,6 +9,7 @@ export const AddNewOrders = () => {
   const [newLines, setNewLines] = useState([]);
   const [showTrackingBox, setShowTrackingBox] = useState(false);
   const [childTracking, setChildTracking] = useState([]);
+  const { darkMode } = useSelector((state) => state.theme);
 
   const handleTracking = () => {
     setShowTrackingBox(true);
@@ -92,14 +93,28 @@ export const AddNewOrders = () => {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      <section className="container mx-auto sm:flex sm:flex-col lg:flex-row   py-6 text-white z-10 gap-5 p-4 max-w-6xl  lg:h-fit sm:h-fit  ">
-        <div className="lg:w-1/2 p-6 border  h-fit rounded-md">
+      <section
+        className={`container mx-auto sm:flex sm:flex-col lg:flex-row   py-6 ${
+          darkMode ? "text-white" : "text-black"
+        } z-10 gap-5 p-4 max-w-6xl  lg:h-fit sm:h-fit  `}
+      >
+        <div
+          className={`lg:w-1/2 p-6  ${
+            darkMode
+              ? "border  rounded-2xl "
+              : " border border-black border-sm rounded-2xl bg-transparent"
+          }  h-fit `}
+        >
           <form className="flex flex-col gap-3">
             <label className="text-2xl">
               Order Number <span className="text-sm">(Required)</span>
             </label>
             <input
-              className="h-10 bg-transparent focus:bg-white focus:text-black border rounded-md border-teal-100 text-2xl"
+              className={` "h-10 bg-transparent ${
+                darkMode
+                  ? "focus:bg-transparent   border-white focus:text-white "
+                  : "text-black focus:bg-transparent border-black  "
+              }  border rounded-md  text-2xl `}
               autoFocus
               required
               type="text"
@@ -108,7 +123,11 @@ export const AddNewOrders = () => {
             />
             <label className="text-2xl">Market Place Order id</label>
             <input
-              className="h-10 bg-transparent focus:bg-white focus:text-black border rounded-md border-teal-100 text-2xl"
+              className={` "h-10 bg-transparent ${
+                darkMode
+                  ? "focus:bg-transparent   border-white focus:text-white "
+                  : "text-black focus:bg-transparent border-black  "
+              }  border rounded-md  text-2xl `}
               autoFocus
               type="text"
               name="marketPlaceOrderId"
@@ -116,7 +135,11 @@ export const AddNewOrders = () => {
             />
             <label className="text-2xl">Thickness</label>
             <input
-              className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
+              className={` "h-10 bg-transparent ${
+                darkMode
+                  ? "focus:bg-transparent   border-white focus:text-white "
+                  : "text-black focus:bg-transparent border-black  "
+              }  border rounded-md  text-2xl `}
               autoFocus
               type="text"
               name="thickness"
@@ -126,7 +149,11 @@ export const AddNewOrders = () => {
             />
             <label className="text-2xl">Select Shape</label>
             <select
-              className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl"
+              className={` "h-10 bg-transparent ${
+                darkMode
+                  ? "focus:bg-transparent   border-white focus:text-white "
+                  : "text-black focus:bg-transparent border-black  "
+              }  border rounded-md  text-2xl `}
               defaultValue=""
               onChange={handleShapeChange}
             >
@@ -145,7 +172,11 @@ export const AddNewOrders = () => {
               <>
                 <label className="text-2xl">Length & Fraction Value</label>
                 <input
-                  className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
+                  className={` "h-10 bg-transparent ${
+                    darkMode
+                      ? "focus:bg-transparent   border-white focus:text-white "
+                      : "text-black focus:bg-transparent border-black  "
+                  }  border rounded-md  text-2xl `}
                   autoFocus
                   type="text"
                   name="length"
@@ -155,7 +186,11 @@ export const AddNewOrders = () => {
                 />
                 <label className="text-2xl">Width & Fraction Value</label>
                 <input
-                  className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
+                  className={` "h-10 bg-transparent ${
+                    darkMode
+                      ? "focus:bg-transparent   border-white focus:text-white "
+                      : "text-black focus:bg-transparent border-black  "
+                  }  border rounded-md  text-2xl `}
                   autoFocus
                   type="text"
                   name="width"
@@ -170,7 +205,11 @@ export const AddNewOrders = () => {
               <>
                 <label className="text-2xl">Diameter & Fraction Value</label>
                 <input
-                  className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
+                  className={` "h-10 bg-transparent ${
+                    darkMode
+                      ? "focus:bg-transparent   border-white focus:text-white "
+                      : "text-black focus:bg-transparent border-black  "
+                  }  border rounded-md  text-2xl `}
                   autoFocus
                   type="text"
                   name="diameter"
@@ -183,7 +222,11 @@ export const AddNewOrders = () => {
 
             <label className="text-2xl">Quantity</label>
             <input
-              className="h-10 bg-transparent border rounded-md border-teal-100 text-2xl focus:bg-white focus:text-black"
+              className={` "h-10 bg-transparent ${
+                darkMode
+                  ? "focus:bg-transparent   border-white focus:text-white "
+                  : "text-black focus:bg-transparent border-black  "
+              }  border rounded-md  text-2xl `}
               autoFocus
               type="text"
               name="quantity"
@@ -199,25 +242,41 @@ export const AddNewOrders = () => {
               <button
                 onClick={handleFromData}
                 type="submit"
-                className="text-2xl bg-orange-600 w-1/2 h-16 rounded-full hover:bg-blue-600"
+                className={`text-2xl ${
+                  darkMode
+                    ? "bg-blue-700 hover:bg-blue-500"
+                    : "bg-blue-700 hover:bg-blue-500"
+                }  w-1/2 h-16 rounded-full `}
               >
                 Save Order
               </button>
 
               <button
                 onClick={handleAddLine}
-                className="text-2xl bg-orange-600 w-1/2 h-16 rounded-full hover:bg-blue-600"
+                className={`text-2xl ${
+                  darkMode
+                    ? "bg-blue-700 hover:bg-blue-500"
+                    : "bg-blue-700 hover:bg-blue-500"
+                }  w-1/2 h-16 rounded-full `}
               >
                 Add new Line
               </button>
             </div>
           </form>
         </div>
-        <div className="lg:w-1/2 p-6 flex items-center flex-col border h-fit rounded-md  ">
+        <div
+          className={`lg:w-1/2 p-6 flex items-center flex-col border h-fit rounded-2xl ${
+            darkMode ? "border-white " : "border-black"
+          }  `}
+        >
           <p className="text-3xl text-center">{orderNo}</p>
           <button
             onClick={handleTracking}
-            className=" text-xl h-11 w-full rounded-lg mb-5 mt-5 hover:bg-blue-600 bg-orange-600 "
+            className={` text-xl h-11 w-full rounded-lg mb-5 mt-5 ${
+              darkMode
+                ? "bg-blue-700 hover:bg-blue-500"
+                : "bg-blue-700 hover:bg-blue-500"
+            } `}
           >
             Add Tracking Number and Shipping Cost
           </button>
@@ -225,18 +284,20 @@ export const AddNewOrders = () => {
             <form className="flex flex-col gap-3">
               <label className="text-2xl">Tracking Number</label>
               <input
-                className="h-10 bg-transparent focus:bg-white focus:text-black border rounded-md border-teal-100 text-2xl"
+                className={`h-10 bg-transparent ${
+                  darkMode ? "" : "border border-black"
+                } focus:text-black border rounded-md  text-2xl`}
                 autoFocus
-                placeholder="7563542788949"
                 type="text"
                 name="tracking"
                 onChange={(e) => setTracking(e.target.value)}
               />
               <label className="text-2xl">Shipping Cost</label>
               <input
-                className="h-10 bg-transparent focus:bg-white focus:text-black border rounded-md border-teal-100 text-2xl"
+                className={`h-10 bg-transparent ${
+                  darkMode ? "" : "border border-black"
+                } focus:text-black border rounded-md  text-2xl`}
                 autoFocus
-                placeholder="13.90"
                 type="text"
                 name="cost"
                 onChange={(e) => setCost(e.target.value)}
@@ -246,7 +307,11 @@ export const AddNewOrders = () => {
               ))}
               <button
                 onClick={handleChilTracking}
-                className=" text-xl h-11 w-full rounded-lg mb-5 mt-5 hover:bg-blue-600 bg-orange-600 "
+                className={`text-xl h-11 w-full rounded-lg mb-5 mt-5 ${
+                  darkMode
+                    ? "bg-blue-700 hover:bg-blue-500"
+                    : "bg-blue-700 hover:bg-blue-500"
+                } `}
               >
                 Add Child Tracking Number
               </button>

@@ -8,6 +8,33 @@
   }
 }
 
+.dark-mode {
+  background: #1f1b1b;
+}
+
 body {
-  background-color: #242020;
+  background: hsla(64, 41%, 92%, 1);
+
+  background: linear-gradient(
+    90deg,
+    hsla(64, 41%, 92%, 1) 12%,
+    hsla(305, 75%, 83%, 1) 82%,
+    hsla(196, 43%, 76%, 1) 100%
+  );
+
+  background: -moz-linear-gradient(
+    90deg,
+    hsla(64, 41%, 92%, 1) 12%,
+    hsla(305, 75%, 83%, 1) 82%,
+    hsla(196, 43%, 76%, 1) 100%
+  );
+
+  background: -webkit-linear-gradient(
+    90deg,
+    hsla(64, 41%, 92%, 1) 12%,
+    hsla(305, 75%, 83%, 1) 82%,
+    hsla(196, 43%, 76%, 1) 100%
+  );
+
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#F2F3E2", endColorstr="#F4B3EF", GradientType=1 );
 }

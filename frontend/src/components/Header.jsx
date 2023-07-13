@@ -4,10 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserFunction, reset } from "../redux/users/authSlice";
 import { BiUserCircle } from "react-icons/bi";
+import { CgDarkMode } from "react-icons/cg";
+import { toggleMode } from "../redux/theme/themeSlice";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const { darkMode } = useSelector((state) => state.theme);
+
+  const handleToggleMode = () => {
+    dispatch(toggleMode());
+  };
 
   const [nav, setNav] = useState(false);
   const navigate = useNavigate();
@@ -24,12 +31,20 @@ export const Header = () => {
 
   return (
     <>
-      <header className=" top-0 z-10 drop-shadow-xl   bg-darkPrimary  text-white sticky">
+      <header
+        className={`top-0 z-10 drop-shadow-xl  ${
+          darkMode ? "bg-[#403838]" : "bg-blue-700"
+        }  text-white sticky`}
+      >
         <section className="mx-auto max-w-6xl p-4 flex justify-between items-center ">
           <Link className="text-3xl font-extrabold sm:text-4xl" to="/">
             PlexigLᗋss
           </Link>
+
           <div className="hidden md:flex gap-5 text-xl  font-bold  items-center px-6">
+            <button onClick={handleToggleMode}>
+              <CgDarkMode className="w-24 h-10" />
+            </button>
             <p className=" text-base underline">
               Logged in as : {user ? <> {user.userName}</> : ""}
             </p>

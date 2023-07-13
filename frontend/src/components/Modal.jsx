@@ -38,7 +38,6 @@ export const Modal = ({
       return order;
     });
     updateSearch(updatedSearch);
-    console.log(updatedSearch);
   };
 
   const handleUpdateInput = (e) => {

@@ -15,6 +15,7 @@ export const HomePage = () => {
 
   //checking if the user is loggedin or not
   const { user } = useSelector((state) => state.auth);
+  const { darkMode } = useSelector((state) => state.theme);
 
   const [roles, setRoles] = useState("");
 
@@ -57,17 +58,35 @@ export const HomePage = () => {
 
       <section className=" mx-auto py-6 z-10  text-white container sm:h-fit  lg:h-screen max-w-6xl flex items-center justify-between flex-wrap sm:flex  sm:items-center sm:gap-9 sm:justify-center  lg:justify-around ">
         <Link to="/addnew">
-          <div className=" rounded-[12px] hover:bg-slate-700  bg-darkSecondary h-64 drop-shadow-xl flex flex-col   justify-center items-center   w-72">
+          <div
+            className={`rounded-[12px] ${
+              darkMode ? "hover:bg-slate-700" : "hover:bg-blue-500"
+            }  ${
+              darkMode ? "bg-darkSecondary" : "bg-blue-700"
+            }   h-64 drop-shadow-xl flex flex-col   justify-center items-center   w-72`}
+          >
             <p className="text-3xl"> + Add new Orders</p>
           </div>
         </Link>
         <Link to="/update">
-          <div className="bg-darkSecondary hover:bg-slate-700 rounded-[12px] h-64 drop-shadow-xl flex flex-col justify-center items-center   w-72">
+          <div
+            className={`rounded-[12px] ${
+              darkMode ? "hover:bg-slate-700" : "hover:bg-blue-500"
+            }  ${
+              darkMode ? "bg-darkSecondary" : "bg-blue-700"
+            }   h-64 drop-shadow-xl flex flex-col   justify-center items-center   w-72`}
+          >
             <p className="text-3xl">Update Orders</p>
           </div>
         </Link>
         <Link to="/allorders">
-          <div className="bg-darkSecondary hover:bg-slate-700 rounded-[12px] h-64 drop-shadow-xl flex flex-col justify-center items-center   w-72">
+          <div
+            className={`rounded-[12px] ${
+              darkMode ? "hover:bg-slate-700" : "hover:bg-blue-500"
+            }  ${
+              darkMode ? "bg-darkSecondary" : "bg-blue-700"
+            }   h-64 drop-shadow-xl flex flex-col   justify-center items-center   w-72`}
+          >
             <p className="text-3xl mb-5">Total Orders Count</p>
             {isLoading ? (
               <Spinner styles={styles} />
@@ -87,17 +106,35 @@ export const HomePage = () => {
           </div>
         </Link>
         <button onClick={checkRoles2}>
-          <div className="bg-darkSecondary  hover:bg-slate-700 rounded-[12px] h-64 drop-shadow-xl flex flex-col justify-center items-center   w-72">
+          <div
+            className={`rounded-[12px] ${
+              darkMode ? "hover:bg-slate-700" : "hover:bg-blue-500"
+            }  ${
+              darkMode ? "bg-darkSecondary" : "bg-blue-700"
+            }   h-64 drop-shadow-xl flex flex-col   justify-center items-center   w-72`}
+          >
             <p className="text-3xl">Generate Orders</p>
           </div>
         </button>
         <Link to="/">
-          <div className="bg-darkSecondary rounded-[12px] h-64 drop-shadow-xl hover:bg-slate-700 flex flex-col justify-center items-center   w-72">
+          <div
+            className={`rounded-[12px] ${
+              darkMode ? "hover:bg-slate-700" : "hover:bg-blue-500"
+            }  ${
+              darkMode ? "bg-darkSecondary" : "bg-blue-700"
+            }   h-64 drop-shadow-xl flex flex-col   justify-center items-center   w-72`}
+          >
             <p className="text-3xl">Experimental</p>
           </div>
         </Link>
         <button onClick={checkRoles}>
-          <div className="bg-blue-700 rounded-[12px] hover:bg-blue-800 h-64 drop-shadow-xl flex flex-col justify-center items-center   w-72">
+          <div
+            className={`rounded-[12px] ${
+              darkMode
+                ? " bg-blue-700 hover:bg-blue-500"
+                : " bg-yellow-500 hover:bg-yellow-700"
+            }     h-64 drop-shadow-xl flex flex-col   justify-center items-center   w-72`}
+          >
             <p className="text-3xl">Admin Panel</p>
           </div>
         </button>

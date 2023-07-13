@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Spinner } from "../components/Spinner";
 
 export const AdminPage = () => {
+  const { darkMode } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const {
     error,
@@ -79,30 +80,38 @@ export const AdminPage = () => {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      <section className="container  mx-auto lg:h-fit  max-w-6xl p-4  z-10 m-8">
+      <section className="container  mx-auto lg:h-[150vh] sm-h-fit  max-w-6xl p-4  z-10 ">
         <div className="flex gap-10 justify-evenly">
           <button
             onClick={handleViewForm}
-            className=" hover:bg-orange-600 w-72 h-24  rounded-full flex items-center justify-center text-white bg-orange-700 "
+            className=" hover:bg-blue-500 w-72 h-24  rounded-full flex items-center justify-center text-white bg-blue-700 "
           >
             <p className="text-2xl">Create New User</p>
           </button>
 
           <button
             onClick={handleUserView}
-            className=" hover:bg-orange-600 w-72 h-24  rounded-full flex items-center justify-center text-white bg-orange-700 "
+            className=" hover:bg-blue-500 w-72 h-24  rounded-full flex items-center justify-center text-white bg-blue-700 "
           >
             <p className="text-2xl">View All Users</p>
           </button>
         </div>
-        <div className={!viewForm ? "hidden" : "border p-4 mt-8  "}>
+        <div
+          className={`${!viewForm ? "hidden" : "border p-4 mt-8 rounded-2xl"} ${
+            darkMode ? "" : "border-black"
+          } `}
+        >
           <form
             onSubmit={handleSubmit}
-            className="flex gap-5 text-white text-2xl m-8 flex-col "
+            className={`flex gap-5 font-semibold ${
+              darkMode ? "text-white" : "text-black "
+            } text-2xl m-8 flex-col  `}
           >
             <label>User Name</label>
             <input
-              className="h-9  p-4 bg-darkSecondary"
+              className={`h-9  p-4 bg-transparent border ${
+                darkMode ? "" : "border-black"
+              } `}
               placeholder="Enter User Name "
               autoFocus
               name="userName"
@@ -111,7 +120,9 @@ export const AdminPage = () => {
             />
             <label>Email</label>
             <input
-              className="h-9  p-4  bg-darkSecondary "
+              className={`h-9  p-4 bg-transparent border ${
+                darkMode ? "" : "border-black"
+              } `}
               placeholder="Enter User Email Address "
               name="email"
               value={data.email}
@@ -119,7 +130,9 @@ export const AdminPage = () => {
             />
             <label> Password</label>
             <input
-              className="h-9  p-4  bg-darkSecondary"
+              className={`h-9  p-4 bg-transparent border ${
+                darkMode ? "" : "border-black"
+              } `}
               placeholder="Enter PassWord "
               type="password"
               name="password"
@@ -128,20 +141,27 @@ export const AdminPage = () => {
             />
             <label>Role</label>
             <select
-              className="h-9  p-4  text-white bg-darkSecondary"
-              placeholder="Enter PassWord "
+              className={`h-9  p-4 bg-transparent border ${
+                darkMode ? "" : "border-black"
+              } `}
               type="select"
               name="roles"
               value={data.roles}
               onChange={handleInputChange}
             >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-              <option value="SuperUser">Super User</option>
+              <option className="text-white  bg-darkPrimary" value="user">
+                User
+              </option>
+              <option className="text-white bg-darkPrimary" value="admin">
+                Admin
+              </option>
+              <option className="text-white bg-darkPrimary" value="SuperUser">
+                Super User
+              </option>
             </select>
             <button
               type="submit"
-              className="bg-orange-700 hover:bg-orange-600 h-16 mt-10"
+              className="bg-blue-700 hover:bg-blue-500 h-16 mt-10"
             >
               Create User
             </button>
@@ -152,11 +172,19 @@ export const AdminPage = () => {
         </div>
         {userDiv && (
           <>
-            <div className="border p-4 mt-8 ">
-              <p className="text-3xl text-center text-white underline">
+            <div
+              className={` border  p-4 mt-8 ${
+                darkMode ? "" : "border-black"
+              } rounded-2xl `}
+            >
+              <p
+                className={` ${
+                  darkMode ? "text-white" : "text-black"
+                } text-3xl text-center  underline `}
+              >
                 Users Details
               </p>
-              <div className="text-white">
+              <div className={`${darkMode ? "text-white" : "text-black"}`}>
                 <p className="text-2xl text-right">
                   Active Users : {allUsers.length}
                 </p>
