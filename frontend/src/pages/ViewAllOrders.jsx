@@ -17,6 +17,7 @@ export const ViewAllOrders = () => {
         <div className="">
           <section className="max-w-fit mx-auto">
             <AllOrdersTable />
+            <p className="text-center  ">End of table</p>
           </section>
         </div>
       </section>

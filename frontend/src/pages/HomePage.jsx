@@ -116,7 +116,7 @@ export const HomePage = () => {
             <p className="text-3xl">Generate Orders</p>
           </div>
         </button>
-        <Link to="/">
+        <Link to="/sales">
           <div
             className={`rounded-[12px] ${
               darkMode ? "hover:bg-slate-700" : "hover:bg-blue-500"
@@ -124,7 +124,7 @@ export const HomePage = () => {
               darkMode ? "bg-darkSecondary" : "bg-blue-700"
             }   h-64 drop-shadow-xl flex flex-col   justify-center items-center   w-72`}
           >
-            <p className="text-3xl">Experimental</p>
+            <p className="text-3xl">Charts</p>
           </div>
         </Link>
         <button onClick={checkRoles}>

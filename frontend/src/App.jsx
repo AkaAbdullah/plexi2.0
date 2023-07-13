@@ -11,6 +11,7 @@ import { UpdateOrders } from "./pages/UpdateOrders";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { UserProfile } from "./pages/UserProfile";
 import { useSelector } from "react-redux";
+import { Charts } from "./pages/Charts";
 
 function App() {
   const { darkMode } = useSelector((state) => state.theme);
@@ -48,6 +49,10 @@ function App() {
             <Route
               path="/dashboard"
               element={<ProtectedRoutes Component={UserProfile} />}
+            />
+            <Route
+              path="/sales"
+              element={<ProtectedRoutes Component={Charts} />}
             />
           </Routes>
         </div>
