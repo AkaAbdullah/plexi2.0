@@ -52,7 +52,7 @@ export const Modal = ({
     <>
       <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="absolute inset-0 bg-darkSecondary opacity-70"></div>
-        <div className="absolute bg-darkSecondary rounded-md shadow-2xl h-[60%] w-[70%] border flex justify-between p-20  border-l-lightPrimary ">
+        <div className="absolute bg-darkSecondary rounded-md shadow-2xl h-[60%] w-[70%] border  flex justify-between p-20  border-l-lightPrimary ">
           <div>
             <h2 className="text-2xl font-bold mb-4">{data.orderNo}</h2>
             <h2 className="text-2xl font-bold mb-4">

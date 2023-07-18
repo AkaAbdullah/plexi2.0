@@ -12,6 +12,7 @@ import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { UserProfile } from "./pages/UserProfile";
 import { useSelector } from "react-redux";
 import { Charts } from "./pages/Charts";
+import { MergePDF } from "./pages/MergePDF";
 
 function App() {
   const { darkMode } = useSelector((state) => state.theme);
@@ -53,6 +54,10 @@ function App() {
             <Route
               path="/sales"
               element={<ProtectedRoutes Component={Charts} />}
+            />
+            <Route
+              path="/merge"
+              element={<ProtectedRoutes Component={MergePDF} />}
             />
           </Routes>
         </div>

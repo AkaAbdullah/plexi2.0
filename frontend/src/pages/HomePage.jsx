@@ -127,6 +127,7 @@ export const HomePage = () => {
             <p className="text-3xl">Charts</p>
           </div>
         </Link>
+
         <button onClick={checkRoles}>
           <div
             className={`rounded-[12px] ${

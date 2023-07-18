@@ -24,10 +24,9 @@ export const AllOrdersTable = () => {
 
   const handleDateSearch = (e) => {
     const result = orders.filter((row) => {
-      return row.createdAt.toLowerCase().includes(showDate.toString());
+      return row.createdAt.includes(showDate.toString());
     });
     setSearch(result);
-    console.log(result);
   };
 
   // Searching the order
@@ -73,7 +72,7 @@ export const AllOrdersTable = () => {
   const completeMark = (id) => {
     dispatch(CompleteMArkOrder(id));
     toast.success("Order Complete Marked Successfully");
-    const updatedOrders = orders.map((order) => {
+    const updatedOrders = search.map((order) => {
       if (order._id === id) {
         return { ...order, completeMarked: true };
       }
@@ -285,7 +284,7 @@ export const AllOrdersTable = () => {
     const textX2 = 164; // Adjust the horizontal position as needed
     const textY2 = tableStartY + lineThickness + 5; // Adjust the vertical position as needed
     doc.setFontSize(12); // Set font size for the text
-    doc.text("Date : " + formattedDate, textX2, textY2); // Draw the text
+    doc.text("Date : " + showDate, textX2, textY2); // Draw the text
 
     // Add line below the text
     const lineBelowTextY = textY + 2; // Adjust the vertical position as needed
