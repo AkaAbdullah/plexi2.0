@@ -8,6 +8,7 @@ export const UserProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const { darkMode } = useSelector((state) => state.theme);
 
   const [password, setPassword] = useState("");
   const data = {
@@ -25,9 +26,17 @@ export const UserProfile = () => {
     <>
       <Toaster position="top-right" reverseOrder={false} />
 
-      <section className="mx-auto flex h-screen flex-col text-white container items-center gap-10 py-4 z-10 max-w-6xl ">
+      <section
+        className={`mx-auto flex h-screen ${
+          darkMode ? "text-white" : "text-black"
+        } flex-col container items-center gap-10 py-4 z-10 max-w-6xl `}
+      >
         <p className="text-3xl font-bold text-center  ">User Dashboard</p>
-        <div className="border p-14 border-bg-white rounded-md lg:w-2/3 sm:w-fit flex flex-col gap-8">
+        <div
+          className={`border p-14 ${
+            darkMode ? "border-white" : "border-black"
+          }  rounded-2xl lg:w-2/3 sm:w-fit flex flex-col gap-8`}
+        >
           <p className="lg:text-2xl sm:text-xl font-semibold underline ">
             UserID : {user._id}
           </p>
@@ -45,9 +54,14 @@ export const UserProfile = () => {
             type="password"
             required
             value={password}
+            autoFocus
             name="password"
             placeholder="enter new password"
-            className="h-12 text-black text-3xl"
+            className={`h-10 mt-5 bg-transparent focus:bg-transparent    border rounded-md text-2xl ${
+              darkMode
+                ? "border-white"
+                : "border-black text-black focus:text-black"
+            } `}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
