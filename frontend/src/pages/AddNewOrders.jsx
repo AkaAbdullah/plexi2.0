@@ -55,11 +55,15 @@ export const AddNewOrders = () => {
   const handleFromData = (e) => {
     e.preventDefault();
     dispatch(CreateOrders(formData));
-    setOrderNo(""),
-      setOrderId(""),
-      setTracking(""),
-      setCost(""),
-      setOrderDetails([]);
+    setOrderNo("");
+    setOrderId("");
+    setTracking("");
+    setCost("");
+    setOrderDetails([]);
+    setShape(""); // Reset the 'shape' state
+    setNewLines([]); // Reset the 'newLines' state
+    setShowTrackingBox(false); // Reset the 'showTrackingBox' state
+    setChildTracking([]); // Reset the 'childTracking' state
   };
 
   const [orderNo, setOrderNo] = useState("");
@@ -111,7 +115,7 @@ export const AddNewOrders = () => {
             <input
               className={` "h-10 bg-transparent ${
                 darkMode
-                  ? "focus:bg-transparent   border-white focus:text-white "
+                  ? "focus:bg-white   border-white focus:text-black "
                   : "text-black focus:bg-transparent border-black  "
               }  border rounded-md  text-2xl `}
               autoFocus
@@ -124,7 +128,7 @@ export const AddNewOrders = () => {
             <input
               className={` "h-10 bg-transparent ${
                 darkMode
-                  ? "focus:bg-transparent   border-white focus:text-white "
+                  ? "focus:bg-white   border-white focus:text-black "
                   : "text-black focus:bg-transparent border-black  "
               }  border rounded-md  text-2xl `}
               autoFocus
@@ -136,7 +140,7 @@ export const AddNewOrders = () => {
             <input
               className={` "h-10 bg-transparent ${
                 darkMode
-                  ? "focus:bg-transparent   border-white focus:text-white "
+                  ? "focus:bg-white   border-white focus:text-black "
                   : "text-black focus:bg-transparent border-black  "
               }  border rounded-md  text-2xl `}
               autoFocus
@@ -173,7 +177,7 @@ export const AddNewOrders = () => {
                 <input
                   className={` "h-10 bg-transparent ${
                     darkMode
-                      ? "focus:bg-transparent   border-white focus:text-white "
+                      ? "focus:bg-white   border-white focus:text-black "
                       : "text-black focus:bg-transparent border-black  "
                   }  border rounded-md  text-2xl `}
                   autoFocus
@@ -187,7 +191,7 @@ export const AddNewOrders = () => {
                 <input
                   className={` "h-10 bg-transparent ${
                     darkMode
-                      ? "focus:bg-transparent   border-white focus:text-white "
+                      ? "focus:bg-white   border-white focus:text-black "
                       : "text-black focus:bg-transparent border-black  "
                   }  border rounded-md  text-2xl `}
                   autoFocus
@@ -206,7 +210,7 @@ export const AddNewOrders = () => {
                 <input
                   className={` "h-10 bg-transparent ${
                     darkMode
-                      ? "focus:bg-transparent   border-white focus:text-white "
+                      ? "focus:bg-white   border-white focus:text-black "
                       : "text-black focus:bg-transparent border-black  "
                   }  border rounded-md  text-2xl `}
                   autoFocus
@@ -223,7 +227,7 @@ export const AddNewOrders = () => {
             <input
               className={` "h-10 bg-transparent ${
                 darkMode
-                  ? "focus:bg-transparent   border-white focus:text-white "
+                  ? "focus:bg-white   border-white focus:text-black "
                   : "text-black focus:bg-transparent border-black  "
               }  border rounded-md  text-2xl `}
               autoFocus
