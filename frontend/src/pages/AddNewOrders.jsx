@@ -53,11 +53,7 @@ export const AddNewOrders = () => {
   const [formData, setFormData] = useState(null);
 
   const handleFromData = (e) => {
-<<<<<<< HEAD
-    // e.preventDefault();
-=======
    e.preventDefault()
->>>>>>> f6770907defd1de512d206ef95e8e2403d22b6cd
     dispatch(CreateOrders(formData));
     setOrderNo("");
     setOrderId("");
