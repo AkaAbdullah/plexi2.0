@@ -338,12 +338,13 @@ export const AllOrdersTable = () => {
           const [whole, fraction] = value.split(" ");
           const [numerator, denominator] = fractionMatch[0].split("/");
           const decimal = parseFloat(numerator) / parseFloat(denominator);
-          return `${whole} ${fraction} D-Val :  ${decimal.toFixed(3)}`;
+          return `${whole} ${fraction} `;
         }
       }
       return value ? value.toString() : "";
     }
   };
+  // return `${whole} ${fraction} D-Val :  ${decimal.toFixed(3)}`;
 
   return (
     <>
