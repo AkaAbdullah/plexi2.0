@@ -103,7 +103,7 @@ export const AllOrdersTable = () => {
           <table>
             <thead>
               <tr className="flex gap-10">
-                <th className="flex-grow  w-28 ">OrderID</th>
+              
                 
                 <th className="flex-grow  w-28 ">Thickness</th>
                 <th className="flex-grow  w-28">Length</th>
@@ -116,7 +116,7 @@ export const AllOrdersTable = () => {
               {row.orderDetails.map((detail, index) => (
                 <tr key={index} className="flex gap-10  ">
                   
-                  <td className="flex-grow  w-28 h-12">{detail.marketPlaceOrderId}</td>
+                 
                   
                   <td className="flex-grow  w-28 h-12">{detail.thickness}</td>
                   <td className="flex-grow w-28">{detail.length}</td>
