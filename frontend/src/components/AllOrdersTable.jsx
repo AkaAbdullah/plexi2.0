@@ -90,6 +90,13 @@ export const AllOrdersTable = () => {
       minWidth: "200px",
     },
     {
+      name: "ID",
+      selector: (row) => row.marketPlaceOrderId,
+      sortable: true,
+      maxWidth: "200px",
+      minWidth: "200px",
+    },
+    {
       name: "Order Details",
       cell: (row) => (
         <div className="flex flex-col items-center gap-4">
