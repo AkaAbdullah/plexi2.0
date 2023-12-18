@@ -317,6 +317,7 @@ export const AllOrdersTable = () => {
           "Width & F-Value",
           "Diameter & F-Value",
           "Quantity",
+          "Remarks",
         ],
       ],
       body: flattenedData,
