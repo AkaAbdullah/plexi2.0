@@ -11,25 +11,12 @@ export const GenrateOrders = () => {
   return (
     <>
       <section className="container mx-auto max-w-6xl p-4 h-screen z-10 text-center text-white">
-        <p className="text-2xl font-bold">Create New Orders</p>
-        <p>Please add space or line break between order numbers</p>
-        <p className="bg-red-700">Please do not add custom cut Orders here</p>
-        <div className="mt-10 flex flex-col items-center gap-7 ">
-          <textarea
-            className={`w-80  h-64 bg-transparent border rounded-md ${
-              darkMode ? "" : "border-black"
-            } `}
-            placeholder="5989938833&#10;5000978763&#10;5000083733"
-            autoFocus
-            onChange={(e) => setOrderNumbers(e.target.value)}
-          ></textarea>
-          <button
-            onClick={handleSubmit}
-            className="bg-orange-600 w-80 hover:bg-slate-500 h-14 text-xl font-bold"
-          >
-            Save Orders
-          </button>
-        </div>
+        <p className="text-2xl font-bold">Custom Cut Printing Report</p>
+        <p>
+          This page is orignally for generating Amazon Orders NOTE: need to
+          update routes
+        </p>
+        {/* <p className="bg-red-700">Please do not add custom cut Orders here</p> */}
       </section>
     </>
   );
