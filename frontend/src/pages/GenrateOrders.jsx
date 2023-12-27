@@ -61,15 +61,19 @@ export const GenrateOrders = () => {
           console.error("CSV file is empty");
         }
       },
-      header: false, // Do not treat the first row as a header
+      header: false,
     });
   };
+  // here the code for the comprison of the two states
+  const [diff, setDiff] = useState([]);
 
   const calulateDifference = () => {
-    console.log(orderNoFromPC);
-    console.log(selectedColumn);
+    setDiff(orderNoFromPC.filter((item) => !selectedColumn.includes(item)));
   };
 
+  useEffect(() => {
+    console.log("Updated diff:", diff);
+  }, [diff]);
   return (
     <>
       <section className="container mx-auto max-w-6xl p-4 h-full z-10 text-center text-white">
@@ -109,26 +113,29 @@ export const GenrateOrders = () => {
             <p>NOTE: these are the labels printed from Ohio pritner</p>
           </div>
         </div>
-        <div className="border h-full m-2 rounded-md">
+        <div className="border h-full m-2 rounded-md p-2">
           <div className="flex justify-start items-start flex-col">
-            <button
-              onClick={calulateDifference}
-              className="bg-blue-700 p-2 w-28 items-center justify-center rounded-sm mt-5 hover:bg-blue-900 mb-2 flex "
-            >
-              Calculate
-            </button>
             <p className="text-xl">
               Total No of Orders Processed today = {orderNoFromPC.length}
             </p>
             <p className="text-xl">
               Total No of Orders Printed from Ohio = {selectedColumn.length}
             </p>
-            <p className="text-xl">
+            <p className="text-xl bg-yellow-600 p-1 rounded-sm">
               Total Difference = {selectedColumn.length - orderNoFromPC.length}
             </p>
           </div>
+          <button
+            onClick={calulateDifference}
+            className="bg-blue-700 p-2 w-40 items-center justify-center rounded-sm mt-2 hover:bg-blue-900  flex "
+          >
+            Calculate
+          </button>
+          <button className="bg-blue-700 p-2 w-40 items-center justify-center rounded-sm mt-2 hover:bg-blue-900 mb-2 flex ">
+            Generate PDF
+          </button>
           <hr />
-          <div className="flex gap-10 p-2">
+          <div className="flex  justify-between gap-10 p-2">
             <div>
               <ul>
                 <h3 className="bg-yellow-500 rounded-sm p-2 text-xl">
@@ -146,7 +153,7 @@ export const GenrateOrders = () => {
               {selectedColumn.length > 0 && (
                 <div>
                   <h3 className="bg-yellow-500 rounded-sm p-2 text-xl">
-                    Ohio Printed Orders:
+                    Ohio Printed Orders
                   </h3>
                   <ul>
                     {selectedColumn
@@ -158,6 +165,14 @@ export const GenrateOrders = () => {
                   </ul>
                 </div>
               )}
+            </div>
+            <div className="">
+              <h3 className="bg-red-500 rounded-sm p-2 text-xl">Difference</h3>
+              <ul>
+                {diff.map((value, index) => (
+                  <li key={index}>{value}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
