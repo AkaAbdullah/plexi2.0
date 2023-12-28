@@ -113,7 +113,7 @@ export const HomePage = () => {
               darkMode ? "bg-darkSecondary" : "bg-blue-700"
             }   h-64 drop-shadow-xl flex flex-col   justify-center items-center   w-72`}
           >
-            <p className="text-3xl">Generate Orders</p>
+            <p className="text-3xl">Custom Cut Printer Report</p>
           </div>
         </button>
         <Link to="/sales">
