@@ -189,8 +189,8 @@ export const GenrateOrders = () => {
 
   return (
     <>
-      <section className="container mx-auto max-w-6xl p-4 h-full z-10 text-center text-white">
-        <p className="text-2xl font-bold">Custom Cut Printing Report</p>
+      <section className="container mx-auto max-w-6xl p-4 h-full z-10 text-start text-white">
+        <p className="text-3xl font-bold">Custom Cut Printing Report</p>
         <p>
           This page is orignally for generating Amazon Orders NOTE: need to
           update routes from backend
@@ -200,9 +200,11 @@ export const GenrateOrders = () => {
           rutime only
         </p>
         <p>NOTE: The page doesnot support D-mode</p>
-        <div className="flex justify-between">
-          <div className="w-[400px] h-[200px] border p-2 m-2 flex items-start justify-center rounded-md flex-col">
-            <p>Please select all the PDF files in the folder</p>
+        <div className="flex justify-start">
+          <div className="w-[700px] h-[200px] border p-2 m-2 flex items-start justify-center rounded-md flex-col">
+            <p className="text-xl">
+              Please select all the PDF files in the folder
+            </p>
 
             <input
               ref={fileInputRef}
