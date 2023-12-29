@@ -4,6 +4,8 @@ import { useRef, useState, useEffect } from "react";
 import Papa from "papaparse";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+import Modal from "react-modal";
+import IMAGES from "../assets/images";
 
 export const GenrateOrders = () => {
   const navigate = useNavigate();
@@ -188,6 +190,51 @@ export const GenrateOrders = () => {
     doc.save("Ohio Printing Report " + formattedDate);
   };
 
+  // Tutorial section
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
+
+  const images = [
+    IMAGES.img1,
+    IMAGES.img2,
+    IMAGES.img3,
+    IMAGES.img4,
+    IMAGES.img5,
+    IMAGES.img6,
+    IMAGES.img7,
+    IMAGES.img8,
+    IMAGES.img9,
+    IMAGES.img10,
+    IMAGES.img11,
+    IMAGES.img12,
+    IMAGES.img13,
+    IMAGES.img14,
+  ];
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const nextImage = () => {
+    setCurrentImage((prevImage) => (prevImage + 1) % images.length);
+  };
+  const switchToNextImage = () => {
+    nextImage();
+  };
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      maxWidth: "1200px", // Set your custom width
+      maxHeight: "800px", // Set your custom height
+    },
+  };
+
   return (
     <>
       <section className="container mx-auto max-w-6xl p-4 h-full z-10 text-start text-white">
@@ -201,7 +248,54 @@ export const GenrateOrders = () => {
           rutime only
         </p>
         <p>NOTE: The page doesnot support D-mode</p>
-        <div className="flex justify-start">
+        <p className="text-xl bg-yellow-500 w-[420px] font-medium rounded-sm p-1">
+          Please Watch Tutorial Before procedding
+        </p>
+        <div>
+          <button
+            onClick={openModal}
+            className="bg-blue-500 rounded-sm p-2 mt-2 text-xl hover:bg-blue-900"
+          >
+            Watch Tutorial
+          </button>
+
+          <Modal
+            isOpen={isOpen}
+            onRequestClose={closeModal}
+            contentLabel="Image Modal"
+            style={customStyles}
+          >
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-white text-2xl"
+            >
+              &times;
+            </button>
+
+            <img
+              src={images[currentImage]}
+              alt={`Image ${currentImage + 1}`}
+              className="max-w-full max-h-screen mx-auto cursor-pointer"
+              onClick={switchToNextImage}
+            />
+
+            <button
+              onClick={nextImage}
+              className="absolute bottom-4 right-4 text-white text-2xl"
+            >
+              Next
+            </button>
+          </Modal>
+        </div>
+
+        {/* <button
+          onClick={openModal}
+          className="bg-blue-500 rounded-sm p-2 mt-2 text-xl  hover:bg-blue-900 "
+        >
+          Watch Tutorial
+        </button> */}
+
+        <div className="flex justify-start ">
           <div className="w-[700px] h-[200px] border p-2 m-2 flex items-start justify-center rounded-md flex-col">
             <p className="text-xl">
               Please select all the PDF files in the folder
