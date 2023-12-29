@@ -161,8 +161,8 @@ export const GenrateOrders = () => {
       "Double Printed ",
     ];
     const tableData = orderNoFromPC.map((_, index) => [
-      orderNoFromPC[index],
-      selectedColumn[index],
+      orderNoFromPC.sort()[index],
+      selectedColumn.sort()[index],
       diff[index],
       commonValues[index],
     ]);
