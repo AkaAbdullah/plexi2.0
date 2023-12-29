@@ -94,7 +94,8 @@ export const GenrateOrders = () => {
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, "0");
     const day = String(currentDate.getDate()).padStart(2, "0");
-    const formattedDate = `${day}-${month}-${year}`;
+    // minus 1 becuase the print report is calculated on next day
+    const formattedDate = `${day - 1}-${month}-${year}`;
     const doc = new jsPDF();
     // Add line at the top of the table
     const tableStartY = 10; // Adjust the vertical position as needed
